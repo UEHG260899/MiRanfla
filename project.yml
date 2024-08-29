@@ -36,7 +36,8 @@ targets:
       path: MiRanfla/Supporting Files/Info.plist
       properties:
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
-        UILaunchStoryboardName: Launch
+        UILaunchStoryboardName: LaunchScreen
+        UIAppFonts: [Nunito-Bold.ttf, Nunito-Medium.ttf, Nunito-Regular.ttf]
   MiRanflaTests:
     settings:
       TARGET_DEVICE_FAMILY: 1
