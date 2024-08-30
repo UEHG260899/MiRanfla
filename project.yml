@@ -23,6 +23,7 @@ targets:
       TARGET_DEVICE_FAMILY: 1
       SUPPORTS_MACCATALYST: false
       SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: false
+      ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: true
     platform: iOS
     type: application
     sources:
