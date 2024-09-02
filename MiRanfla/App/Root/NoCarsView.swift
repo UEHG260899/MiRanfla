@@ -30,20 +30,7 @@ struct NoCarsView: View {
                 .font(.regular, size: .body)
         }
         .sheet(isPresented: $presentCarForm) {
-            NavigationStack {
-                Text("Hola")
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button(action: { presentCarForm = false }) {
-                                Text("Cancelar")
-                                    .font(.regular, size: .body)
-                            }
-                            .foregroundStyle(.accent)
-                        }
-                    }
-            }
-            
-                
+            AddCarView()
         }
     }
 }
