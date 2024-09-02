@@ -29,11 +29,19 @@ struct CarSpecsSectionView: View {
                 Text("Estado de emplacado")
                     .font(.regular, size: .body)
             }
+            .tint(.customPrimary)
+            
+            Toggle(isOn: .constant(true)) {
+                Text("Recibir notificaciones sobre verificaciones.")
+            }
+            .tint(.customPrimary)
 
         } header: {
             Text("Características adicionales")
-                .textCase(.none)
-                .font(.regular, size: .body)
+                .font(.regular, size: .caption)
+        } footer: {
+            Text("Estos datos serán usados para los cálculos de consumo de combustible y algunas notificaciones relacionadas.")
+                .font(.regular, size: .caption)
         }
     }
 }

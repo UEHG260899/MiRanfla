@@ -26,8 +26,7 @@ struct CarDataSectionView: View {
                 .font(.regular, size: .body)
         } header: {
             Text("Datos del vehículo")
-                .textCase(.none)
-                .font(.regular, size: .body)
+                .font(.regular, size: .caption)
         }
     }
 }
