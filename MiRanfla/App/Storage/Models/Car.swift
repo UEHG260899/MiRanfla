@@ -10,6 +10,7 @@ import SwiftData
 
 @Model
 class Car {
+    @Attribute(.unique)
     let id: UUID
     var make: String
     var model: String
