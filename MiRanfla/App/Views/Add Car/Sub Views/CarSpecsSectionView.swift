@@ -10,7 +10,7 @@ import SwiftUI
 struct CarSpecsSectionView: View {
     
     @State private var test = ""
-    @State private var plateState: States = .cdmx
+    @State private var plateState: StateInMexico = .cdmx
     
     var body: some View {
         Section {
@@ -21,7 +21,7 @@ struct CarSpecsSectionView: View {
                 .font(.regular, size: .body)
             
             Picker(selection: $plateState) {
-                ForEach(States.allCases, id: \.self) { state in
+                ForEach(StateInMexico.allCases, id: \.self) { state in
                     Text(state.rawValue)
                         .font(.regular, size: .body)
                 }
@@ -46,8 +46,10 @@ struct CarSpecsSectionView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     Form {
         CarSpecsSectionView()
     }
 }
+#endif

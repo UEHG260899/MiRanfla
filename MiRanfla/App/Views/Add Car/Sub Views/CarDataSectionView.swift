@@ -31,8 +31,10 @@ struct CarDataSectionView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     Form {
         CarDataSectionView()
     }
 }
+#endif

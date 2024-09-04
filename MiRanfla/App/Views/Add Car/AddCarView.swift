@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-enum States: String, CaseIterable {
-    case mexico = "Estado de México"
-    case cdmx = "CDMX"
-}
-
-
 struct AddCarView: View {
     
     @Environment(\.dismiss) var dismiss
@@ -55,6 +49,7 @@ struct AddCarView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     struct AddCarViewWrapper: View {
         
@@ -72,3 +67,4 @@ struct AddCarView: View {
     
     return AddCarViewWrapper()
 }
+#endif
