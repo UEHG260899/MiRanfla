@@ -11,17 +11,6 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack {
-                    HStack {
-                        Text("VW")
-                        Text("Vento")
-                    }
-                    .font(.bold, size: .title)
-                    
-                    Text("2015")
-                        .font(.regular, size: .body)
-                    
-                }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -66,3 +55,17 @@ struct HomeView: View {
     }
 }
 #endif
+
+/*
+ VStack {
+     HStack {
+         Text("VW")
+         Text("Vento")
+     }
+     .font(.bold, size: .title)
+     
+     Text("2015")
+         .font(.regular, size: .body)
+     
+ }
+ */
