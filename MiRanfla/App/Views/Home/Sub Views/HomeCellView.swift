@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeCellView: View {
+    
+    let size: CGFloat
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Toyota")
@@ -17,14 +20,13 @@ struct HomeCellView: View {
                 .font(.regular, size: .description)
         }
         .padding([.leading, .bottom])
-        // TODO: Change TO use GeometryReader sizes
-        .frame(width: UIScreen.main.bounds.width/2, height: UIScreen.main.bounds.width/2, alignment: .bottomLeading)
-        .background(RadialGradient(gradient: Gradient(colors: [.customSecondary, .customPrimary]), center: .topTrailing, startRadius: 50, endRadius: 100), in: RoundedRectangle(cornerRadius: 8))
+        .frame(width: abs(size), height: abs(size), alignment: .bottomLeading)
+        .background(RadialGradient(gradient: Gradient(colors: [.customSecondary, .customPrimary]), center: .top, startRadius: 50, endRadius: 100), in: RoundedRectangle(cornerRadius: 8))
     }
 }
 
 #if DEBUG
 #Preview("Normal") {
-    HomeCellView()
+    HomeCellView(size: UIScreen.main.bounds.width / 2)
 }
 #endif

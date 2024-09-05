@@ -10,29 +10,32 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         NavigationStack {
-            ScrollView {
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Button(action: {}) {
-                        Text("Seleccionar otro")
-                            .font(.semibold, size: .body)
+            GeometryReader { proxy in
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.flexible(minimum: 120, maximum: .infinity), spacing: 10), GridItem(.flexible(minimum: 120, maximum: .infinity))], spacing: 10) {
+                        HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
+                        HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
+                        HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
+                        HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
                     }
-                    .foregroundStyle(.accent)
+                    .padding(.horizontal, 12)
                 }
-                
-                ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button(action: {}) {
-                        Image(systemName: "pencil")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    
+                    ToolbarItem(placement: .principal) {
+                        Text("Tus autos")
+                            .font(.bold, size: .body)
                     }
-                    .foregroundStyle(.accent)
-                    Button(action: {}) {
-                        Image(systemName: "plus")
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {}) {
+                            Image(systemName: "plus")
+                        }
+                        .foregroundStyle(.accent)
                     }
-                    .foregroundStyle(.accent)
+                    
                 }
-                
             }
         }
     }
