@@ -13,7 +13,7 @@ struct RootView: View {
             Color.customBackground
                 .ignoresSafeArea()
             
-            NoCarsView()
+            HomeView()
         }
     }
 }
