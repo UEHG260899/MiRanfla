@@ -19,6 +19,7 @@ struct HomeCellView: View {
             Text("Corolla")
                 .font(.regular, size: .description)
         }
+        .foregroundStyle(.black)
         .padding([.leading, .bottom])
         .frame(width: abs(size), height: abs(size), alignment: .bottomLeading)
         .background(RadialGradient(gradient: Gradient(colors: [.customSecondary, .customPrimary]), center: .top, startRadius: 50, endRadius: 100), in: RoundedRectangle(cornerRadius: 8))

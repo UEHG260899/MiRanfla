@@ -13,7 +13,9 @@ struct HomeView: View {
             GeometryReader { proxy in
                 ScrollView {
                     LazyVGrid(columns: [GridItem(.flexible(minimum: 120, maximum: .infinity), spacing: 10), GridItem(.flexible(minimum: 120, maximum: .infinity))], spacing: 10) {
-                        HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
+                        NavigationLink(value: "") {
+                            HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
+                        }
                         HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
                         HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
                         HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
@@ -35,6 +37,9 @@ struct HomeView: View {
                         .foregroundStyle(.accent)
                     }
                     
+                }
+                .navigationDestination(for: String.self) { _ in
+                    CarInfoView()
                 }
             }
         }
@@ -58,17 +63,3 @@ struct HomeView: View {
     }
 }
 #endif
-
-/*
- VStack {
-     HStack {
-         Text("VW")
-         Text("Vento")
-     }
-     .font(.bold, size: .title)
-     
-     Text("2015")
-         .font(.regular, size: .body)
-     
- }
- */
