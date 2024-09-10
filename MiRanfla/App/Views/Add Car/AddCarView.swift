@@ -10,7 +10,11 @@ import SwiftUI
 struct AddCarView: View {
     
     @Environment(\.dismiss) var dismiss
-    @State private var viewModel = AddCarViewModel()
+    @State private var viewModel: AddCarViewModel
+    
+    init(viewModel: AddCarViewModel) {
+        self._viewModel = State(wrappedValue: viewModel)
+    }
 
     var body: some View {
         NavigationStack {
@@ -61,7 +65,8 @@ struct AddCarView: View {
                 showSheet = true
             }
             .sheet(isPresented: $showSheet) {
-                AddCarView()
+                // TODO: Create mock dependencies
+                AddCarFactory.make()
             }
         }
     }

@@ -14,7 +14,7 @@ protocol AddCarAdapting {
 struct AddCarAdapter: AddCarAdapting {
     private let storageManager: SwiftDataManager
     
-    init(storageManager: SwiftDataManager) {
+    init(storageManager: SwiftDataManager = .init(container: try! .init(for: Car.self))) {
         self.storageManager = storageManager
     }
 
