@@ -9,20 +9,20 @@ import SwiftUI
 
 struct CarDataSectionView: View {
     
-    @State private var test = ""
+    @Binding var data: CarDataFormModel
     
     var body: some View {
         Section {
-            TextField("Marca", text: $test)
+            TextField("Marca", text: $data.make)
                 .font(.regular, size: .body)
             
-            TextField("Modelo (ej. Corolla)", text: $test)
+            TextField("Modelo (ej. Corolla)", text: $data.model)
                 .font(.regular, size: .body)
             
-            TextField("Año", text: $test)
+            TextField("Año", text: $data.year)
                 .font(.regular, size: .body)
             
-            TextField("Terminación de la placa", text: $test)
+            TextField("Terminación de la placa", text: $data.lastPlateNumber)
                 .font(.regular, size: .body)
         } header: {
             Text("Datos del vehículo")
@@ -34,7 +34,7 @@ struct CarDataSectionView: View {
 #if DEBUG
 #Preview {
     Form {
-        CarDataSectionView()
+        CarDataSectionView(data: .constant(.empty))
     }
 }
 #endif

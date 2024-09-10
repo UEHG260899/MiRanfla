@@ -20,11 +20,7 @@ class Car {
     var tankCapacity: UInt
     var plateState: StateInMexico
     var verificationNotificationsEnabled: Bool
-    
-    // For state restoration
-    var showOnInit: Bool
-    
-    
+
     init(make: String,
          model: String,
          year: UInt,
@@ -33,7 +29,6 @@ class Car {
          tankCapacity: UInt,
          plateState: StateInMexico,
          verificationNotificationsEnabled: Bool,
-         showOnInit: Bool,
          id: UUID = UUID()) {
         self.id = id
         self.make = make
@@ -44,7 +39,6 @@ class Car {
         self.tankCapacity = tankCapacity
         self.plateState = plateState
         self.verificationNotificationsEnabled = verificationNotificationsEnabled
-        self.showOnInit = showOnInit
     }
 
 }

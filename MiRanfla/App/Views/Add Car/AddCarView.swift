@@ -10,6 +10,7 @@ import SwiftUI
 struct AddCarView: View {
     
     @Environment(\.dismiss) var dismiss
+    @State private var viewModel = AddCarViewModel()
 
     var body: some View {
         NavigationStack {
@@ -18,8 +19,8 @@ struct AddCarView: View {
                     .ignoresSafeArea()
                 
                 Form {
-                    CarDataSectionView()
-                    CarSpecsSectionView()
+                    CarDataSectionView(data: $viewModel.carDataForm)
+                    CarSpecsSectionView(data: $viewModel.carSpecsForm)
                 }
                 .scrollContentBackground(.hidden)
                 .toolbar {
@@ -37,7 +38,7 @@ struct AddCarView: View {
                     }
                     
                     ToolbarItem(placement: .primaryAction) {
-                        Button(action: { dismiss() }) {
+                        Button(action:  viewModel.save) {
                             Text("Guardar")
                                 .font(.regular, size: .body)
                         }
