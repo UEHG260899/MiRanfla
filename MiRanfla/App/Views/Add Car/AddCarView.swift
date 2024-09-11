@@ -24,7 +24,8 @@ struct AddCarView: View {
                 
                 Form {
                     CarDataSectionView(data: $viewModel.carDataForm)
-                    CarSpecsSectionView(data: $viewModel.carSpecsForm)
+                    CarSpecsSectionView(data: $viewModel.carSpecsForm,
+                                        showVerificationRow: viewModel.showVerificationRow)
                 }
                 .scrollContentBackground(.hidden)
                 .toolbar {
@@ -49,6 +50,9 @@ struct AddCarView: View {
                         .foregroundStyle(.accent)
                     }
                 }
+            }
+            .alert("Ocurrió un error al momento de agregar el auto", isPresented: $viewModel.showError) {
+                Button("Ok", role: .none, action: {})
             }
         }
     }

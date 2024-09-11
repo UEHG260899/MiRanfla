@@ -10,6 +10,7 @@ import SwiftUI
 struct CarSpecsSectionView: View {
     
     @Binding var data: CarSpecsFormModel
+    let showVerificationRow: Bool
     
     var body: some View {
         Section {
@@ -30,10 +31,12 @@ struct CarSpecsSectionView: View {
             }
             .tint(.customPrimary)
             
-            Toggle(isOn: $data.verificationNotifications) {
-                Text("Recibir notificaciones sobre verificaciones.")
+            if showVerificationRow {
+                Toggle(isOn: $data.verificationNotifications) {
+                    Text("Recibir notificaciones sobre verificaciones.")
+                }
+                .tint(.customPrimary)
             }
-            .tint(.customPrimary)
 
         } header: {
             Text("Características adicionales")
@@ -48,7 +51,7 @@ struct CarSpecsSectionView: View {
 #if DEBUG
 #Preview {
     Form {
-        CarSpecsSectionView(data: .constant(.empty))
+        CarSpecsSectionView(data: .constant(.empty), showVerificationRow: true)
     }
 }
 #endif

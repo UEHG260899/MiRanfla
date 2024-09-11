@@ -30,8 +30,18 @@ final class AddCarViewModelTests: XCTestCase {
         XCTAssertEqual(sut.carDataForm, .empty)
         XCTAssertEqual(sut.carSpecsForm, .empty)
         XCTAssertFalse(sut.showError)
+        XCTAssertFalse(sut.showVerificationRow)
     }
 
+    func testVerificationRowVisibility() {
+        // Aguascalientes´s plates don´t need to verify
+        sut.carSpecsForm.plateState = .aguascalientes
+        XCTAssertFalse(sut.showVerificationRow)
+        
+        sut.carSpecsForm.plateState = .estadoDeMexico
+        XCTAssertTrue(sut.showVerificationRow)
+    }
+    
     func testSaveWithSuccess() {
         // When
         sut.save()
