@@ -30,7 +30,7 @@ struct NoCarsView: View {
                 .font(.regular, size: .body)
         }
         .sheet(isPresented: $presentCarForm) {
-            AddCarView()
+            AddCarFactory.make()
         }
     }
 }

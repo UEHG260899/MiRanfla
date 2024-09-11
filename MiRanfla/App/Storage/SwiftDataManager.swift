@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-struct SwiftDataManager {
+class SwiftDataManager {
     
     private let container: ModelContainer
     private let context: ModelContext

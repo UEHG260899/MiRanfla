@@ -9,19 +9,19 @@ import SwiftUI
 
 struct CarSpecsSectionView: View {
     
-    @State private var test = ""
-    @State private var plateState: StateInMexico = .cdmx
+    @Binding var data: CarSpecsFormModel
+    let showVerificationRow: Bool
     
     var body: some View {
         Section {
-            TextField("Kilometraje", text: $test)
+            TextField("Kilometraje", text: $data.milage)
                 .font(.regular, size: .body)
             
-            TextField("Capacidad del tanque", text: $test)
+            TextField("Capacidad del tanque", text: $data.tankCapacity)
                 .font(.regular, size: .body)
             
-            Picker(selection: $plateState) {
-                ForEach(StateInMexico.allCases, id: \.self) { state in
+            Picker(selection: $data.plateState) {
+                ForEach(UIStateInMexico.allCases, id: \.self) { state in
                     Text(state.rawValue)
                         .font(.regular, size: .body)
                 }
@@ -31,10 +31,12 @@ struct CarSpecsSectionView: View {
             }
             .tint(.customPrimary)
             
-            Toggle(isOn: .constant(true)) {
-                Text("Recibir notificaciones sobre verificaciones.")
+            if showVerificationRow {
+                Toggle(isOn: $data.verificationNotifications) {
+                    Text("Recibir notificaciones sobre verificaciones.")
+                }
+                .tint(.customPrimary)
             }
-            .tint(.customPrimary)
 
         } header: {
             Text("Características adicionales")
@@ -49,7 +51,7 @@ struct CarSpecsSectionView: View {
 #if DEBUG
 #Preview {
     Form {
-        CarSpecsSectionView()
+        CarSpecsSectionView(data: .constant(.empty), showVerificationRow: true)
     }
 }
 #endif

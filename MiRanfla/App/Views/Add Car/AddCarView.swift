@@ -10,6 +10,11 @@ import SwiftUI
 struct AddCarView: View {
     
     @Environment(\.dismiss) var dismiss
+    @State private var viewModel: AddCarViewModel
+    
+    init(viewModel: AddCarViewModel) {
+        self._viewModel = State(wrappedValue: viewModel)
+    }
 
     var body: some View {
         NavigationStack {
@@ -18,8 +23,9 @@ struct AddCarView: View {
                     .ignoresSafeArea()
                 
                 Form {
-                    CarDataSectionView()
-                    CarSpecsSectionView()
+                    CarDataSectionView(data: $viewModel.carDataForm)
+                    CarSpecsSectionView(data: $viewModel.carSpecsForm,
+                                        showVerificationRow: viewModel.showVerificationRow)
                 }
                 .scrollContentBackground(.hidden)
                 .toolbar {
@@ -37,13 +43,16 @@ struct AddCarView: View {
                     }
                     
                     ToolbarItem(placement: .primaryAction) {
-                        Button(action: { dismiss() }) {
+                        Button(action:  viewModel.save) {
                             Text("Guardar")
                                 .font(.regular, size: .body)
                         }
                         .foregroundStyle(.accent)
                     }
                 }
+            }
+            .alert("Ocurrió un error al momento de agregar el auto", isPresented: $viewModel.showError) {
+                Button("Ok", role: .none, action: {})
             }
         }
     }
@@ -60,7 +69,8 @@ struct AddCarView: View {
                 showSheet = true
             }
             .sheet(isPresented: $showSheet) {
-                AddCarView()
+                // TODO: Create mock dependencies
+                AddCarFactory.make()
             }
         }
     }
