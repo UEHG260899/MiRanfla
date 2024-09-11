@@ -18,10 +18,10 @@ final class AddCarModelTransformerTests: XCTestCase {
         let mockCarData = CarDataFormModel(make: "", model: "", year: "2024", lastPlateNumber: "4")
         let mockCarSpecsData = CarSpecsFormModel(milage: "100", tankCapacity: "20", plateState: .aguascalientes, verificationNotifications: true)
 
-        let sut = AddCarModelTransformer(carDataForm: mockCarData, carSpecsForm: mockCarSpecsData)
+        let sut = AddCarModelTransformer()
             
         // When
-        let transformedCar = try sut.transformToStorageModel()
+        let transformedCar = try sut.transformToStorageModel(from: mockCarData, and: mockCarSpecsData)
         
         // Then
         XCTAssertEqual(transformedCar.make, mockCarData.make)
@@ -31,5 +31,19 @@ final class AddCarModelTransformerTests: XCTestCase {
         XCTAssertEqual(transformedCar.milage, try UInt(mockCarSpecsData.milage, format: .number))
         XCTAssertEqual(transformedCar.tankCapacity, try UInt(mockCarSpecsData.tankCapacity, format: .number))
         XCTAssertEqual(transformedCar.plateState.rawValue, mockCarSpecsData.plateState.rawValue)
+    }
+
+    func testTransformToStorageModelDefaultsToCDMXWhenRawValueIsNotCorrect() throws {
+        // Given
+        let mockCarData = CarDataFormModel(make: "", model: "", year: "2024", lastPlateNumber: "4")
+        let mockCarSpecsData = CarSpecsFormModel(milage: "100", tankCapacity: "20", plateState: .test, verificationNotifications: true)
+        
+        let sut = AddCarModelTransformer()
+        
+        // When
+        let car = try sut.transformToStorageModel(from: mockCarData, and: mockCarSpecsData)
+        
+        // Then
+        XCTAssertEqual(car.plateState.rawValue, UIStateInMexico.cdmx.rawValue)
     }
 }

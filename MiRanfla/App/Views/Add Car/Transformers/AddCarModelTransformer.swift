@@ -7,16 +7,8 @@
 
 import Foundation
 
-struct AddCarModelTransformer {
-    private let carDataForm: CarDataFormModel
-    private let carSpecsForm: CarSpecsFormModel
-    
-    init(carDataForm: CarDataFormModel, carSpecsForm: CarSpecsFormModel) {
-        self.carDataForm = carDataForm
-        self.carSpecsForm = carSpecsForm
-    }
-    
-    func transformToStorageModel() throws -> Car {
+struct AddCarModelTransformer {    
+    func transformToStorageModel(from carDataForm: CarDataFormModel, and carSpecsForm: CarSpecsFormModel) throws -> Car {
         let car = Car(make: carDataForm.make,
                       model: carDataForm.model,
                       year: try UInt(carDataForm.year, format: .number),

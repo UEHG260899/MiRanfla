@@ -9,7 +9,8 @@ import Foundation
 
 enum AddCarFactory {
     static func make() -> AddCarView {
-        let adapter = AddCarAdapter()
+        let transformer = AddCarModelTransformer()
+        let adapter = CarAdapter(transformer: transformer)
         let viewModel = AddCarViewModel(adapter: adapter)
         return AddCarView(viewModel: viewModel)
     }

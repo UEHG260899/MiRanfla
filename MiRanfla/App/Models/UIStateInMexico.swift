@@ -40,4 +40,7 @@ enum UIStateInMexico: String, CaseIterable {
     case veracruz = "VERACRUZ"
     case yucatan = "YUCATAN"
     case zacatecas = "ZACATECAS"
+    #if targetEnvironment(simulator)
+    case test = "Test"
+    #endif
 }

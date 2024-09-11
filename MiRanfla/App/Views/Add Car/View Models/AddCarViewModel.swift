@@ -10,16 +10,22 @@ import Observation
 @Observable
 class AddCarViewModel {
     
-    private let adapter: AddCarAdapting
+    private let adapter: CarAdapting
     
     var carDataForm: CarDataFormModel = .empty
     var carSpecsForm: CarSpecsFormModel = .empty
+    var showError = false
 
     
-    init(adapter: any AddCarAdapting) {
+    init(adapter: any CarAdapting) {
         self.adapter = adapter
     }
     
-    func save() {
+    func save(){
+        do {
+            try adapter.save(data: carDataForm, specs: carSpecsForm)
+        } catch {
+            showError = true
+        }
     }
 }
