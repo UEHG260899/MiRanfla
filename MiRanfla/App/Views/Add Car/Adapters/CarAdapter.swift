@@ -6,16 +6,18 @@
 //
 
 import Foundation
+import SwiftData
 
 protocol CarAdapting {
     func save(data: CarDataFormModel, specs: CarSpecsFormModel) throws
+    func carCount() throws -> Int
 }
 
 struct CarAdapter: CarAdapting {
     private let transformer: AddCarModelTransformer
     private let storageManager: SwiftDataManager
     
-    init(transformer: AddCarModelTransformer, storageManager: SwiftDataManager = .init(container: try! .init(for: Car.self))) {
+    init(transformer: AddCarModelTransformer = .init(), storageManager: SwiftDataManager = .init(container: try! .init(for: Car.self))) {
         self.transformer = transformer
         self.storageManager = storageManager
     }
@@ -23,5 +25,9 @@ struct CarAdapter: CarAdapting {
     func save(data: CarDataFormModel, specs: CarSpecsFormModel) throws {
         let car = try transformer.transformToStorageModel(from: data, and: specs)
         storageManager.save(car)
+    }
+
+    func carCount() throws -> Int {
+        try storageManager.fetch(descriptor: FetchDescriptor<Car>()).count
     }
 }
