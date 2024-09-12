@@ -20,6 +20,7 @@ class SwiftDataManager {
 
     func save<T: PersistentModel>(_ object: T) {
         context.insert(object)
+        try? context.save()
     }
 
     func fetch<T: PersistentModel>(descriptor: FetchDescriptor<T>) throws -> [T] {
@@ -28,6 +29,7 @@ class SwiftDataManager {
     
     func delete<T: PersistentModel>(object: T) {
         context.delete(object)
+        try? context.save()
     }
 
 }
