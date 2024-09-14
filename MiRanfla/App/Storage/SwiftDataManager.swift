@@ -18,18 +18,18 @@ class SwiftDataManager {
         self.context = ModelContext(container)
     }
 
-    func save<T: PersistentModel>(_ object: T) {
+    func save<T: PersistentModel>(_ object: T) throws {
         context.insert(object)
-        try? context.save()
+        try context.save()
     }
 
     func fetch<T: PersistentModel>(descriptor: FetchDescriptor<T>) throws -> [T] {
         try context.fetch(descriptor)
     }
     
-    func delete<T: PersistentModel>(object: T) {
+    func delete<T: PersistentModel>(object: T) throws {
         context.delete(object)
-        try? context.save()
+        try context.save()
     }
 
 }
