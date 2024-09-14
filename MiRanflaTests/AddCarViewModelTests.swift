@@ -30,7 +30,7 @@ final class AddCarViewModelTests: XCTestCase {
         XCTAssertEqual(sut.carDataForm, .empty)
         XCTAssertEqual(sut.carSpecsForm, .empty)
         XCTAssertFalse(sut.showError)
-        XCTAssertFalse(sut.showVerificationRow)
+        XCTAssertTrue(sut.showVerificationRow)
     }
 
     func testVerificationRowVisibility() {

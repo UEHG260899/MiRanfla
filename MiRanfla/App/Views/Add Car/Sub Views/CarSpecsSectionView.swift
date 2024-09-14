@@ -30,6 +30,7 @@ struct CarSpecsSectionView: View {
                     .font(.regular, size: .body)
             }
             .tint(.customPrimary)
+            .padding(.vertical, 4)
             
             if showVerificationRow {
                 Toggle(isOn: $data.verificationNotifications) {

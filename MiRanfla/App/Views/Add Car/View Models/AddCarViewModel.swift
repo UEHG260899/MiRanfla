@@ -29,7 +29,7 @@ class AddCarViewModel {
         }
     }
     var showError = false
-    var showVerificationRow = false
+    var showVerificationRow = true
 
     
     init(adapter: any CarAdapting) {

@@ -24,7 +24,7 @@ struct CarAdapter: CarAdapting {
 
     func save(data: CarDataFormModel, specs: CarSpecsFormModel) throws {
         let car = try transformer.transformToStorageModel(from: data, and: specs)
-        storageManager.save(car)
+        try storageManager.save(car)
     }
 
     func carCount() throws -> Int {
