@@ -1,5 +1,5 @@
 //
-//  NotificationsProviding.swift
+//  NotificationCenter+NotificationsProviding.swift
 //  MiRanfla
 //
 //  Created by Uriel Hernandez Gonzalez on 11/09/24.

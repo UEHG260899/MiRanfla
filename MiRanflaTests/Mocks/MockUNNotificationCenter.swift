@@ -1,0 +1,45 @@
+//
+//  MockUNNotificationCenter.swift
+//  MiRanflaTests
+//
+//  Created by Uriel Hernandez Gonzalez on 13/09/24.
+//
+
+@testable import MiRanfla
+import UserNotifications
+
+final class MockUNNotificationCenter: NotificationCenterProviding {
+
+    struct CalledMethods: OptionSet {
+        let rawValue: Int
+        
+        static let requestAuthorization = CalledMethods(rawValue: 1 << 0)
+        static let add = CalledMethods(rawValue: 1 << 0)
+        static let removeDeliveredNotifications = CalledMethods(rawValue: 1 << 2)
+        static let removePendingNotificationRequests = CalledMethods(rawValue: 1 << 3)
+    }
+
+    var calledMethods: CalledMethods = []
+    var receivedOptions: UNAuthorizationOptions = []
+    var receivedNotificationRequest: UNNotificationRequest?
+
+    func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool {
+        calledMethods.insert(.requestAuthorization)
+        receivedOptions = options
+        return false
+    }
+    
+    func add(_ request: UNNotificationRequest) async throws {
+        calledMethods.insert(.add)
+        receivedNotificationRequest = request
+    }
+    
+    func removeDeliveredNotifications(withIdentifiers: [String]) {
+        calledMethods.insert(.removeDeliveredNotifications)
+    }
+    
+    func removePendingNotificationRequests(withIdentifiers: [String]) {
+        calledMethods.insert(.removePendingNotificationRequests)
+    }
+    
+}
