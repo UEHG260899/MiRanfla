@@ -11,7 +11,8 @@ enum AddCarFactory {
     static func make() -> AddCarView {
         let transformer = AddCarModelTransformer()
         let adapter = CarAdapter(transformer: transformer)
-        let viewModel = AddCarViewModel(adapter: adapter)
+        let notificationsManager = NotificationsManager()
+        let viewModel = AddCarViewModel(adapter: adapter, notificationsManager: notificationsManager)
         return AddCarView(viewModel: viewModel)
     }
 }

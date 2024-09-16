@@ -22,11 +22,19 @@ final class MockUNNotificationCenter: NotificationCenterProviding {
     var calledMethods: CalledMethods = []
     var receivedOptions: UNAuthorizationOptions = []
     var receivedNotificationRequest: UNNotificationRequest?
+    var authorizationReturn: Result<Bool, Error> = .success(true)
 
     func requestAuthorization(options: UNAuthorizationOptions) async throws -> Bool {
         calledMethods.insert(.requestAuthorization)
         receivedOptions = options
-        return false
+        
+        
+        switch authorizationReturn {
+        case .success(let success):
+            return success
+        case .failure(let failure):
+            throw failure
+        }
     }
     
     func add(_ request: UNNotificationRequest) async throws {

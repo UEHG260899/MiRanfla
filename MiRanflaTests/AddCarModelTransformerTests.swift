@@ -15,7 +15,7 @@ final class AddCarModelTransformerTests: XCTestCase {
     
     func testTransformToStorageModelThrowsWhenInvalidYearOrIntValuesAreProvided() throws {
         // Given
-        let mockCarData = CarDataFormModel(make: "", model: "", year: "2024", lastPlateNumber: "4")
+        let mockCarData = CarDataFormModel(id: .init(), make: "", model: "", year: "2024", lastPlateNumber: "4")
         let mockCarSpecsData = CarSpecsFormModel(milage: "100", tankCapacity: "20", plateState: .aguascalientes, verificationNotifications: true)
 
         let sut = AddCarModelTransformer()
@@ -35,7 +35,7 @@ final class AddCarModelTransformerTests: XCTestCase {
 
     func testTransformToStorageModelDefaultsToCDMXWhenRawValueIsNotCorrect() throws {
         // Given
-        let mockCarData = CarDataFormModel(make: "", model: "", year: "2024", lastPlateNumber: "4")
+        let mockCarData = CarDataFormModel(id: .init(), make: "", model: "", year: "2024", lastPlateNumber: "4")
         let mockCarSpecsData = CarSpecsFormModel(milage: "100", tankCapacity: "20", plateState: .test, verificationNotifications: true)
         
         let sut = AddCarModelTransformer()

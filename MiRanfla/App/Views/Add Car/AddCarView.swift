@@ -43,7 +43,11 @@ struct AddCarView: View {
                     }
                     
                     ToolbarItem(placement: .primaryAction) {
-                        Button(action:  viewModel.save) {
+                        Button {
+                            Task {
+                                await viewModel.save()
+                            }
+                        } label: {
                             Text("Guardar")
                                 .font(.regular, size: .body)
                         }

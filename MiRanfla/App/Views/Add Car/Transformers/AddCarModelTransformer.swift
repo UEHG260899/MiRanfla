@@ -16,7 +16,8 @@ struct AddCarModelTransformer {
                       milage: try UInt(carSpecsForm.milage, format: .number),
                       tankCapacity: try UInt(carSpecsForm.tankCapacity, format: .number),
                       plateState: StateInMexico(rawValue: carSpecsForm.plateState.rawValue) ?? .cdmx,
-                      verificationNotificationsEnabled: carSpecsForm.verificationNotifications)
+                      verificationNotificationsEnabled: carSpecsForm.verificationNotifications,
+                      id: carDataForm.id)
         
         return car
     }

@@ -8,6 +8,7 @@
 import Foundation
 
 struct CarDataFormModel {
+    let id: UUID
     var make: String
     var model: String
     var year: String
@@ -16,7 +17,8 @@ struct CarDataFormModel {
 
 
 extension CarDataFormModel {
-    static let empty = CarDataFormModel(make: "",
+    static let empty = CarDataFormModel(id: UUID(),
+                                        make: "",
                                         model: "",
                                         year: "",
                                         lastPlateNumber: "")

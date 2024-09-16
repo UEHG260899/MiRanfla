@@ -16,7 +16,7 @@ final class CarAdapterTests: XCTestCase {
         let mockStorage = MockSwiftDataManager(container: try ModelContainer(for: Car.self, configurations: configuration))
         let sut = CarAdapter(transformer: .init(), storageManager: mockStorage)
         
-        let mockData = CarDataFormModel(make: "", model: "", year: "2024", lastPlateNumber: "4")
+        let mockData = CarDataFormModel(id: .init(), make: "", model: "", year: "2024", lastPlateNumber: "4")
         let mockSpecs = CarSpecsFormModel(milage: "100", tankCapacity: "100", plateState: .cdmx, verificationNotifications: false)
         
         // Then
