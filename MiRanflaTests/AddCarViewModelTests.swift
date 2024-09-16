@@ -13,15 +13,21 @@ final class AddCarViewModelTests: XCTestCase {
     
     var sut: AddCarViewModel!
     var adapter: MockCarAdapter!
+    var mockNotificationCenter: MockUNNotificationCenter!
+    var notificationsManager: NotificationsManager!
     
     override func setUp() {
         super.setUp()
+        mockNotificationCenter = MockUNNotificationCenter()
+        notificationsManager = NotificationsManager(notificationCenter: mockNotificationCenter)
         adapter = MockCarAdapter()
-        sut = AddCarViewModel(adapter: adapter)
+        sut = AddCarViewModel(adapter: adapter, notificationsManager: notificationsManager)
     }
 
     override func tearDown() {
         sut = nil
+        mockNotificationCenter = nil
+        notificationsManager = nil
         adapter = nil
         super.tearDown()
     }
@@ -42,22 +48,66 @@ final class AddCarViewModelTests: XCTestCase {
         XCTAssertTrue(sut.showVerificationRow)
     }
     
-    func testSaveWithSuccess() {
+    func testSaveWithSuccess() async {
         // When
-        sut.save()
+        await sut.save()
         
         // Then
         XCTAssertFalse(sut.showError)
     }
 
-    func testSaveWithError() {
+    func testSaveWithError() async {
         // Given
         adapter.saveResult = .failure(NSError(domain: "com.miranfla.tests", code: 10))
         
         // When
-        sut.save()
+        await sut.save()
         
         // Then
+        XCTAssertTrue(sut.showError)
+        XCTAssertTrue(mockNotificationCenter.calledMethods.contains(.removeDeliveredNotifications))
+        XCTAssertTrue(mockNotificationCenter.calledMethods.contains(.removePendingNotificationRequests))
+    }
+
+    func testSaveWithNotifications() async {
+        sut.carSpecsForm.verificationNotifications = true
+        
+        await sut.save()
+        
+        XCTAssertTrue(mockNotificationCenter.calledMethods.contains(.add))
+        XCTAssertEqual(mockNotificationCenter.receivedNotificationRequest?.content.title, "¡No te olvides de verificar!")
+        XCTAssertEqual(mockNotificationCenter.receivedNotificationRequest?.content.body, "Tu \(sut.carDataForm.make) \(sut.carDataForm.model) verifica este mes.")
+    }
+
+    func testConfigureNotifications() async {
+        // When verificationNotifications is false
+        sut.carSpecsForm.verificationNotifications = false
+        
+        XCTAssertFalse(mockNotificationCenter.calledMethods.contains(.requestAuthorization))
+
+        // When verificationNotifications is true
+        sut.carSpecsForm.verificationNotifications = true
+
+        try? await Task.sleep(for: .milliseconds(100))
+        
+        XCTAssertTrue(mockNotificationCenter.calledMethods.contains(.requestAuthorization))
+
+        // When verificationNotifications is true AND authorization is false
+        mockNotificationCenter.authorizationReturn = .success(false)
+        sut.carSpecsForm.verificationNotifications = true
+
+        try? await Task.sleep(for: .milliseconds(100))
+        
+        XCTAssertTrue(mockNotificationCenter.calledMethods.contains(.requestAuthorization))
+        XCTAssertFalse(sut.carSpecsForm.verificationNotifications)
+
+        // When verificationNotifications is true AND authorization throws
+        mockNotificationCenter.authorizationReturn = .failure(NSError(domain: "com.miranfla.tests", code: 10))
+        sut.carSpecsForm.verificationNotifications = true
+
+        try? await Task.sleep(for: .milliseconds(100))
+        
+        XCTAssertTrue(mockNotificationCenter.calledMethods.contains(.requestAuthorization))
         XCTAssertTrue(sut.showError)
     }
 
