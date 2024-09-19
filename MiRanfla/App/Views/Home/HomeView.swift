@@ -29,7 +29,9 @@ struct HomeView: View {
                     LazyVGrid(columns: columnItems, spacing: 10) {
                         ForEach(viewModel.cars, id: \.id) { car in
                             NavigationLink(value: car) {
-                                HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
+                                HomeCellView(carMake: car.make,
+                                             carModel: car.model,
+                                             size: (proxy.size.width / 2) - 10 - 12)
                             }
                         }
                     }

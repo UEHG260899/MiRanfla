@@ -9,14 +9,16 @@ import SwiftUI
 
 struct HomeCellView: View {
     
+    let carMake: String
+    let carModel: String
     let size: CGFloat
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Toyota")
+            Text(carMake)
                 .font(.semibold, size: .body)
             
-            Text("Corolla")
+            Text(carModel)
                 .font(.regular, size: .description)
         }
         .foregroundStyle(.text)
@@ -28,6 +30,8 @@ struct HomeCellView: View {
 
 #if DEBUG
 #Preview("Normal") {
-    HomeCellView(size: UIScreen.main.bounds.width / 2)
+    HomeCellView(carMake: "Toyota",
+                 carModel: "Corolla",
+                 size: UIScreen.main.bounds.width / 2)
 }
 #endif
