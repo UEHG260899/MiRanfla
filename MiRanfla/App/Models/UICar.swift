@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UICar {
+struct UICar: Hashable {
     let id: UUID
     let make: String
     let model: String

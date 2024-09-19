@@ -13,12 +13,23 @@ final class AddCarModelTransformerTests: XCTestCase {
     
     let container = try! ModelContainer(for: Car.self, configurations: .init(isStoredInMemoryOnly: true))
     
+    
+    var sut: AddCarModelTransformer!
+    
+    override func setUp() {
+        super.setUp()
+        sut = AddCarModelTransformer()
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+    
     func testTransformToStorageModelThrowsWhenInvalidYearOrIntValuesAreProvided() throws {
         // Given
         let mockCarData = CarDataFormModel(id: .init(), make: "", model: "", year: "2024", lastPlateNumber: "4")
         let mockCarSpecsData = CarSpecsFormModel(milage: "100", tankCapacity: "20", plateState: .aguascalientes, verificationNotifications: true)
-
-        let sut = AddCarModelTransformer()
             
         // When
         let transformedCar = try sut.transformToStorageModel(from: mockCarData, and: mockCarSpecsData)
@@ -37,13 +48,30 @@ final class AddCarModelTransformerTests: XCTestCase {
         // Given
         let mockCarData = CarDataFormModel(id: .init(), make: "", model: "", year: "2024", lastPlateNumber: "4")
         let mockCarSpecsData = CarSpecsFormModel(milage: "100", tankCapacity: "20", plateState: .test, verificationNotifications: true)
-        
-        let sut = AddCarModelTransformer()
-        
+
         // When
         let car = try sut.transformToStorageModel(from: mockCarData, and: mockCarSpecsData)
         
         // Then
         XCTAssertEqual(car.plateState.rawValue, UIStateInMexico.cdmx.rawValue)
+    }
+
+    func testTransformToUIModel() {
+        // Given
+        let mockCar = Car(make: "Toyota", model: "Hillux", year: 2024, lastPlateNumber: 4, milage: 160, tankCapacity: 60, plateState: .aguascalientes, verificationNotificationsEnabled: true)
+        
+        // When
+        let uiCar = sut.transformToUIModel(from: mockCar)
+
+        // Then
+        XCTAssertEqual(uiCar.id, mockCar.id)
+        XCTAssertEqual(uiCar.make, mockCar.make)
+        XCTAssertEqual(uiCar.model, mockCar.model)
+        XCTAssertEqual(uiCar.year, String(describing: mockCar.year))
+        XCTAssertEqual(uiCar.lastPlateNumber, String(describing: mockCar.lastPlateNumber))
+        XCTAssertEqual(uiCar.milage, String(describing: mockCar.milage))
+        XCTAssertEqual(uiCar.tankCapacity, String(describing: mockCar.tankCapacity))
+        XCTAssertEqual(uiCar.plateState, .aguascalientes)
+        XCTAssertEqual(uiCar.verificationNotificationsEnabled, mockCar.verificationNotificationsEnabled)
     }
 }

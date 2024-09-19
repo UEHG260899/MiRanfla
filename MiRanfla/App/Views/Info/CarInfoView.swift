@@ -10,6 +10,7 @@ import SwiftUI
 struct CarInfoView: View {
     
     @Environment(\.dismiss) private var dismiss
+    let car: UICar
     
     var body: some View {
         VStack {
@@ -96,7 +97,7 @@ struct CarInfoView: View {
 
 #if DEBUG
 #Preview("Normal") {
-    CarInfoView()
+    CarInfoView(car: .empty)
 }
 
 #Preview("Inside NavStack") {
@@ -105,7 +106,7 @@ struct CarInfoView: View {
             Color.customBackground
                 .ignoresSafeArea()
             
-            CarInfoView()
+            CarInfoView(car: .empty)
         }
     }
 }

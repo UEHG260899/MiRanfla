@@ -8,17 +8,30 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @State private var viewModel: HomeViewModel
+    
+    private var columnItems: [GridItem] {
+        [
+            GridItem(.flexible(minimum: 120, maximum: .infinity), spacing: 10),
+            GridItem(.flexible(minimum: 120, maximum: .infinity))
+        ]
+    }
+    
+    init(viewModel: HomeViewModel) {
+        self._viewModel = State(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         NavigationStack {
             GeometryReader { proxy in
                 ScrollView {
-                    LazyVGrid(columns: [GridItem(.flexible(minimum: 120, maximum: .infinity), spacing: 10), GridItem(.flexible(minimum: 120, maximum: .infinity))], spacing: 10) {
-                        NavigationLink(value: "") {
-                            HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
+                    LazyVGrid(columns: columnItems, spacing: 10) {
+                        ForEach(viewModel.cars, id: \.id) { car in
+                            NavigationLink(value: car) {
+                                HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
+                            }
                         }
-                        HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
-                        HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
-                        HomeCellView(size: (proxy.size.width / 2) - 10 - 12)
                     }
                     .padding(.horizontal, 12)
                 }
@@ -38,17 +51,20 @@ struct HomeView: View {
                     }
                     
                 }
-                .navigationDestination(for: String.self) { _ in
-                    CarInfoView()
+                .navigationDestination(for: UICar.self) { car in
+                    CarInfoView(car: car)
                 }
             }
+        }
+        .onAppear {
+            viewModel.fetchCars()
         }
     }
 }
 
 #if DEBUG
 #Preview("Normal") {
-    HomeView()
+    HomeView(viewModel: .init(adapter: CarAdapter()))
 }
 
 
@@ -58,7 +74,7 @@ struct HomeView: View {
             Color.customBackground
                 .ignoresSafeArea()
             
-            HomeView()
+            HomeView(viewModel: .init(adapter: CarAdapter()))
         }
     }
 }
