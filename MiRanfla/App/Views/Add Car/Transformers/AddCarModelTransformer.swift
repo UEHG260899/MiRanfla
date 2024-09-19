@@ -21,4 +21,16 @@ struct AddCarModelTransformer {
         
         return car
     }
+
+    func transformToUIModel(from car: Car) -> UICar {
+        UICar(id: car.id,
+              make: car.make,
+              model: car.model,
+              year: String(describing: car.year),
+              lastPlateNumber: String(describing: car.lastPlateNumber),
+              milage: String(describing: car.milage),
+              tankCapacity: String(describing: car.tankCapacity),
+              plateState: UIStateInMexico(rawValue: car.plateState.rawValue) ?? .cdmx,
+              verificationNotificationsEnabled: car.verificationNotificationsEnabled)
+    }
 }

@@ -19,7 +19,7 @@ final class RootViewModelTests: XCTestCase {
         // Given
         let adapter = MockCarAdapter()
         let notificationsProvider = MockNotificationProvider()
-        adapter.returningCars = 1
+        adapter.returningCarsCount = 1
 
         // When
         let sut = RootViewModel(adapter: adapter, notificationsProvider: notificationsProvider)

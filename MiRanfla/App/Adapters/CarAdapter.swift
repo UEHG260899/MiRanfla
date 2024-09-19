@@ -10,6 +10,7 @@ import SwiftData
 
 protocol CarAdapting {
     func save(data: CarDataFormModel, specs: CarSpecsFormModel) throws
+    func fetch(with descriptor: FetchDescriptor<Car>) throws -> [UICar]
     func carCount() throws -> Int
 }
 
@@ -25,6 +26,11 @@ struct CarAdapter: CarAdapting {
     func save(data: CarDataFormModel, specs: CarSpecsFormModel) throws {
         let car = try transformer.transformToStorageModel(from: data, and: specs)
         try storageManager.save(car)
+    }
+
+    func fetch(with descriptor: FetchDescriptor<Car>) throws -> [UICar] {
+        let storageCars = try storageManager.fetch(descriptor: descriptor)
+        return storageCars.map { transformer.transformToUIModel(from: $0) }
     }
 
     func carCount() throws -> Int {

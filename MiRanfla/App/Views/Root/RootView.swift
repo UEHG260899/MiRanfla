@@ -24,7 +24,7 @@ struct RootView: View {
             case .noCar:
                 NoCarsView()
             case .home:
-                HomeView()
+                HomeFactory.make()
             }
         }
     }
