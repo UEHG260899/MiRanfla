@@ -8,6 +8,14 @@
 import Foundation
 
 struct UICar: Hashable {
+
+    private let numberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = .current
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
+
     let id: UUID
     let make: String
     let model: String
@@ -16,10 +24,18 @@ struct UICar: Hashable {
     let milage: String
     let tankCapacity: String
     let plateState: UIStateInMexico
-    let verificationNotificationsEnabled: Bool
+    var verificationNotificationsEnabled: Bool
+    
+    var formatedMilage: String {
+        guard let numericalMilage = Int(milage),
+              let formattedNumber = numberFormatter.string(from: NSNumber(value: numericalMilage)) else {
+            return "- km"
+        }
+        return "\(formattedNumber) km"
+    }
 }
 
-
+#if DEBUG
 extension UICar {
     static let empty = UICar(id: .init(),
                              make: "",
@@ -30,4 +46,15 @@ extension UICar {
                              tankCapacity: "",
                              plateState: .cdmx,
                              verificationNotificationsEnabled: false)
+    
+    static let previewCar = UICar(id: UUID(),
+                                  make: "VW",
+                                  model: "Vento",
+                                  year: "2015",
+                                  lastPlateNumber: "5",
+                                  milage: "150000",
+                                  tankCapacity: "60",
+                                  plateState: .estadoDeMexico,
+                                  verificationNotificationsEnabled: false)
 }
+#endif

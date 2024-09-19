@@ -15,12 +15,12 @@ struct CarInfoView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("VW")
-                Text("Vento")
+                Text(car.make)
+                Text(car.model)
             }
             .font(.bold, size: .title)
             
-            Text("2015")
+            Text(car.year)
                 .font(.regular, size: .body)
             
             VStack {
@@ -29,7 +29,7 @@ struct CarInfoView: View {
                         HStack {
                             Text("Terminación de la placa:")
                                 .font(.semibold, size: .body)
-                            Text("2")
+                            Text(car.lastPlateNumber)
                                 .font(.regular, size: .body)
                         }
                     }
@@ -41,7 +41,7 @@ struct CarInfoView: View {
                             HStack {
                                 Text("Kilometraje:")
                                     .font(.semibold, size: .body)
-                                Text("110 km")
+                                Text(car.formatedMilage)
                                     .font(.regular, size: .body)
                             }
                             
@@ -50,7 +50,7 @@ struct CarInfoView: View {
                             HStack {
                                 Text("Capacidad del tanque:")
                                     .font(.semibold, size: .body)
-                                Text("60 lt")
+                                Text("\(car.tankCapacity) lt")
                                     .font(.regular, size: .body)
                             }
                             Divider()
@@ -58,7 +58,7 @@ struct CarInfoView: View {
                             HStack {
                                 Text("Estado de emplacado:")
                                     .font(.semibold, size: .body)
-                                Text(StateInMexico.cdmx.rawValue.capitalized)
+                                Text(car.plateState.rawValue.capitalized)
                                     .font(.regular, size: .body)
                             }
                             Divider()
@@ -97,7 +97,7 @@ struct CarInfoView: View {
 
 #if DEBUG
 #Preview("Normal") {
-    CarInfoView(car: .empty)
+    CarInfoView(car: .previewCar)
 }
 
 #Preview("Inside NavStack") {
@@ -106,7 +106,7 @@ struct CarInfoView: View {
             Color.customBackground
                 .ignoresSafeArea()
             
-            CarInfoView(car: .empty)
+            CarInfoView(car: .previewCar)
         }
     }
 }
