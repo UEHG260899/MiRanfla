@@ -10,17 +10,21 @@ import SwiftUI
 struct CarInfoView: View {
     
     @Environment(\.dismiss) private var dismiss
-    let car: UICar
+    @State private var viewModel: CarInfoViewModel
+    
+    init(viewModel: CarInfoViewModel) {
+        self._viewModel = State(wrappedValue: viewModel)
+    }
     
     var body: some View {
         VStack {
             HStack {
-                Text(car.make)
-                Text(car.model)
+                Text(viewModel.uiCar.make)
+                Text(viewModel.uiCar.model)
             }
             .font(.bold, size: .title)
             
-            Text(car.year)
+            Text(viewModel.uiCar.year)
                 .font(.regular, size: .body)
             
             VStack {
@@ -29,7 +33,7 @@ struct CarInfoView: View {
                         HStack {
                             Text("Terminación de la placa:")
                                 .font(.semibold, size: .body)
-                            Text(car.lastPlateNumber)
+                            Text(viewModel.uiCar.lastPlateNumber)
                                 .font(.regular, size: .body)
                         }
                     }
@@ -41,7 +45,7 @@ struct CarInfoView: View {
                             HStack {
                                 Text("Kilometraje:")
                                     .font(.semibold, size: .body)
-                                Text(car.formatedMilage)
+                                Text(viewModel.uiCar.formatedMilage)
                                     .font(.regular, size: .body)
                             }
                             
@@ -50,7 +54,7 @@ struct CarInfoView: View {
                             HStack {
                                 Text("Capacidad del tanque:")
                                     .font(.semibold, size: .body)
-                                Text("\(car.tankCapacity) lt")
+                                Text("\(viewModel.uiCar.tankCapacity) lt")
                                     .font(.regular, size: .body)
                             }
                             Divider()
@@ -58,17 +62,20 @@ struct CarInfoView: View {
                             HStack {
                                 Text("Estado de emplacado:")
                                     .font(.semibold, size: .body)
-                                Text(car.plateState.rawValue.capitalized)
+                                Text(viewModel.uiCar.plateState.rawValue.capitalized)
                                     .font(.regular, size: .body)
                             }
-                            Divider()
+                            
+                            if viewModel.shouldShowNotificationsRow {
+                                Divider()
+                                    .padding(.trailing)
+                                Toggle(isOn: $viewModel.uiCar.verificationNotificationsEnabled){
+                                    Text("Recibir notificaciones sobre verificaciones.")
+                                        .font(.semibold, size: .body)
+                                }
                                 .padding(.trailing)
-                            Toggle(isOn: .constant(true)){
-                                Text("Recibir notificaciones sobre verificaciones.")
-                                    .font(.semibold, size: .body)
+                                .tint(.customPrimary)
                             }
-                            .padding(.trailing)
-                            .tint(.customPrimary)
                         }
                     }
                     .groupBoxStyle(.materialized)
@@ -92,12 +99,15 @@ struct CarInfoView: View {
                 }
             }
         }
+        .alert("Ocurrió un error al momento de agendar las notificaciones", isPresented: $viewModel.showError) {
+            Button("Ok", role: .none, action: {})
+        }
     }
 }
 
 #if DEBUG
 #Preview("Normal") {
-    CarInfoView(car: .previewCar)
+    CarInfoView(viewModel: .init(uiCar: .previewCar, adapter: CarAdapter(), notificationsManager: NotificationsManager()))
 }
 
 #Preview("Inside NavStack") {
@@ -106,7 +116,7 @@ struct CarInfoView: View {
             Color.customBackground
                 .ignoresSafeArea()
             
-            CarInfoView(car: .previewCar)
+            CarInfoView(viewModel: .init(uiCar: .previewCar, adapter: CarAdapter(), notificationsManager: NotificationsManager()))
         }
     }
 }

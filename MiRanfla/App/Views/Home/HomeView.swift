@@ -54,7 +54,7 @@ struct HomeView: View {
                     
                 }
                 .navigationDestination(for: UICar.self) { car in
-                    CarInfoView(car: car)
+                    CarInfoFactory.make(with: car)
                 }
             }
         }
