@@ -66,7 +66,7 @@ final class CarInfoViewModelTests: XCTestCase {
         sut.uiCar.verificationNotificationsEnabled = true
         mockNotificationsCenter.authorizationReturn = .success(true)
         
-        try? await Task.sleep(for: .milliseconds(50))
+        try? await Task.sleep(for: .milliseconds(100))
         
         XCTAssertTrue(mockNotificationsCenter.calledMethods.contains(.add))
         XCTAssertEqual(mockNotificationsCenter.receivedNotificationRequest?.identifier, car.id.uuidString)
