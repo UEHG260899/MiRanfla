@@ -14,7 +14,6 @@ struct CarSpecsFormModel {
     var verificationNotifications: Bool
 }
 
-
 extension CarSpecsFormModel {
     static let empty = CarSpecsFormModel(milage: "",
                                      tankCapacity: "",

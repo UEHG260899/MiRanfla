@@ -10,7 +10,7 @@ import Foundation
 
 extension CarDataFormModel: Equatable {
     public static func == (lhs: CarDataFormModel, rhs: CarDataFormModel) -> Bool {
-        return lhs.make == rhs.make && 
+        return lhs.make == rhs.make &&
         lhs.model == rhs.model &&
         lhs.year == rhs.year &&
         lhs.lastPlateNumber == rhs.lastPlateNumber

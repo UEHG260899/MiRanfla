@@ -25,7 +25,7 @@ struct UICar: Hashable {
     let tankCapacity: String
     let plateState: UIStateInMexico
     var verificationNotificationsEnabled: Bool
-    
+
     var formatedMilage: String {
         guard let numericalMilage = Int(milage),
               let formattedNumber = numberFormatter.string(from: NSNumber(value: numericalMilage)) else {
@@ -40,13 +40,13 @@ extension UICar {
     static let empty = UICar(id: .init(),
                              make: "",
                              model: "",
-                             year: "", 
+                             year: "",
                              lastPlateNumber: "",
                              milage: "",
                              tankCapacity: "",
                              plateState: .cdmx,
                              verificationNotificationsEnabled: false)
-    
+
     static let previewCar = UICar(id: UUID(),
                                   make: "VW",
                                   model: "Vento",

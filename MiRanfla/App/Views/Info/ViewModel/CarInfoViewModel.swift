@@ -9,10 +9,10 @@ import Observation
 
 @Observable
 final class CarInfoViewModel {
-    
+
     private let adapter: CarAdapting
     private let notificationsManager: NotificationsManager
-    
+
     let shouldShowNotificationsRow: Bool
     var uiCar: UICar {
         didSet {
@@ -22,8 +22,7 @@ final class CarInfoViewModel {
         }
     }
     var showError = false
-    
-    
+
     init(uiCar: UICar, adapter: any CarAdapting, notificationsManager: NotificationsManager) {
         self.uiCar = uiCar
         self.adapter = adapter
@@ -34,12 +33,12 @@ final class CarInfoViewModel {
     func configureNotifications() async {
         do {
             let permissionsGranted = try await notificationsManager.requestPermissions()
-            
+
             if !permissionsGranted {
                 uiCar.verificationNotificationsEnabled = false
                 return
             }
-            
+
             if uiCar.verificationNotificationsEnabled {
                 let verificationMonths = VerificationMonths(forPlate: uiCar.lastPlateNumber)
                 let firstNotification = LocalNotification(id: uiCar.id.uuidString,
@@ -54,9 +53,8 @@ final class CarInfoViewModel {
                 try await notificationsManager.schedule(secondNotification)
                 return
             }
-            
+
             notificationsManager.removeNotifications(for: uiCar.id.uuidString)
-        
         } catch {
             showError = true
         }

@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct RootView: View {
-    
+
     @State private var viewModel: RootViewModel
-    
+
     init(viewModel: RootViewModel) {
         self._viewModel = State(wrappedValue: viewModel)
     }
-    
+
     var body: some View {
         ZStack {
             Color.customBackground
                 .ignoresSafeArea()
-            
+
             switch viewModel.screenToShow {
             case .noCar:
                 NoCarsView()

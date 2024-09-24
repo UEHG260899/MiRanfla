@@ -10,10 +10,10 @@ import SwiftUI
 
 @Observable
 class AddCarViewModel {
-    
+
     private let adapter: CarAdapting
     private let notificationsManager: NotificationsManager
-    
+
     var carDataForm: CarDataFormModel = .empty
     var carSpecsForm: CarSpecsFormModel = .empty {
         didSet {
@@ -23,7 +23,7 @@ class AddCarViewModel {
                 }
                 return
             }
-            
+
             withAnimation {
                 showVerificationRow = true
             }
@@ -35,16 +35,15 @@ class AddCarViewModel {
     var showError = false
     var showVerificationRow = true
 
-    
     init(adapter: any CarAdapting, notificationsManager: NotificationsManager) {
         self.adapter = adapter
         self.notificationsManager = notificationsManager
     }
-    
+
     func save() async {
         do {
             try adapter.save(data: carDataForm, specs: carSpecsForm)
-            
+
             if carSpecsForm.verificationNotifications {
                 try await scheduleVerificationNotifications()
             }
@@ -56,14 +55,15 @@ class AddCarViewModel {
 
     private func scheduleVerificationNotifications() async throws {
         let verificationMonths = VerificationMonths(forPlate: carDataForm.lastPlateNumber)
-        let firstNotification = LocalNotification(id: carDataForm.id.uuidString, 
+        let notificationBody = "Tu \(carDataForm.make) \(carDataForm.model) verifica este mes."
+        let firstNotification = LocalNotification(id: carDataForm.id.uuidString,
                                                   month: verificationMonths.first.rawValue,
                                                   title: "¡No te olvides de verificar!",
-                                                  body: "Tu \(carDataForm.make) \(carDataForm.model) verifica este mes.")
-        let secondNotification = LocalNotification(id: carDataForm.id.uuidString, 
+                                                  body: notificationBody)
+        let secondNotification = LocalNotification(id: carDataForm.id.uuidString,
                                                    month: verificationMonths.second.rawValue,
                                                    title: "¡No te olvides de verificar!",
-                                                   body: "Tu \(carDataForm.make) \(carDataForm.model) verifica este mes.")
+                                                   body: notificationBody)
         try await notificationsManager.schedule(firstNotification)
         try await notificationsManager.schedule(secondNotification)
     }
@@ -72,10 +72,10 @@ class AddCarViewModel {
         guard carSpecsForm.verificationNotifications else {
             return
         }
-        
+
         do {
             let permissionGranted = try await notificationsManager.requestPermissions()
-            
+
             if !permissionGranted {
                 carSpecsForm.verificationNotifications = false
             }

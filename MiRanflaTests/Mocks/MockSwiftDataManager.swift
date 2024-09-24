@@ -11,14 +11,13 @@ import SwiftData
 class MockSwiftDataManager: SwiftDataManager {
     struct CalledMethods: OptionSet {
         let rawValue: Int
-        
+
         static let save = CalledMethods(rawValue: 1 << 0)
     }
-    
-    
+
     var calledMethods: CalledMethods = []
-    
-    override func save<T>(_ object: T) where T : PersistentModel {
+
+    override func save<T: PersistentModel>(_ object: T) {
         calledMethods.insert(.save)
     }
 }

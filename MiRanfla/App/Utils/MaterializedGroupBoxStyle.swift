@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct MaterializedGroupBoxStyle: GroupBoxStyle {
     func makeBody(configuration: Configuration) -> some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -23,7 +22,6 @@ struct MaterializedGroupBoxStyle: GroupBoxStyle {
         .background(.customBackground.opacity(0.5), in: RoundedRectangle(cornerRadius: 12))
     }
 }
-
 
 extension GroupBoxStyle where Self == MaterializedGroupBoxStyle {
     static var materialized: MaterializedGroupBoxStyle { .init() }

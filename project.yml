@@ -40,6 +40,18 @@ targets:
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UILaunchStoryboardName: LaunchScreen
         UIAppFonts: [Nunito-Bold.ttf, Nunito-SemiBold.ttf, Nunito-Medium.ttf, Nunito-Regular.ttf]
+        postCompileScripts:
+    postCompileScripts:
+      - script: |
+          export PATH="$PATH:/opt/homebrew/bin"
+
+          if which swiftlint >/dev/null; then
+            swiftlint
+          else
+            echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+          fi
+
+        name: Swiftlint
   MiRanflaTests:
     settings:
       TARGET_DEVICE_FAMILY: 1

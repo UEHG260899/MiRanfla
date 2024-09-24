@@ -31,5 +31,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>postCompileScripts</key>
+	<string></string>
 </dict>
 </plist>

@@ -15,7 +15,6 @@ struct CarDataFormModel {
     var lastPlateNumber: String
 }
 
-
 extension CarDataFormModel {
     static let empty = CarDataFormModel(id: UUID(),
                                         make: "",

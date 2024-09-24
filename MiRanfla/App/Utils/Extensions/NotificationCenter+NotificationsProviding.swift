@@ -12,5 +12,4 @@ protocol NotificationsObserving {
     func removeObserver(_ observer: Any)
 }
 
-
 extension NotificationCenter: NotificationsObserving {}

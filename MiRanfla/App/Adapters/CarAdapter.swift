@@ -17,8 +17,11 @@ protocol CarAdapting {
 struct CarAdapter: CarAdapting {
     private let transformer: AddCarModelTransformer
     private let storageManager: SwiftDataManager
-    
+
+    // TODO: Find a way to not send default parameters
+    // swiftlint:disable:next force_try
     init(transformer: AddCarModelTransformer = .init(), storageManager: SwiftDataManager = .init(container: try! .init(for: Car.self))) {
+        // swiftlint:disable:previous line_length
         self.transformer = transformer
         self.storageManager = storageManager
     }

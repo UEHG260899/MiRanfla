@@ -10,7 +10,7 @@ import UserNotifications
 
 struct NotificationsManager {
     let notificationCenter: NotificationCenterProviding
-    
+
     init(notificationCenter: any NotificationCenterProviding = UNUserNotificationCenter.current()) {
         self.notificationCenter = notificationCenter
     }
@@ -25,11 +25,11 @@ struct NotificationsManager {
         dateComponents.day = 1
         dateComponents.month = notification.month
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        
+
         let content = UNMutableNotificationContent()
         content.title = notification.title
         content.body = notification.body
-        
+
         let request = UNNotificationRequest(identifier: notification.id, content: content, trigger: trigger)
         try await notificationCenter.add(request)
     }

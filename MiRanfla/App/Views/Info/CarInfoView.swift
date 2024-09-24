@@ -8,14 +8,23 @@
 import SwiftUI
 
 struct CarInfoView: View {
-    
+
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel: CarInfoViewModel
-    
+
     init(viewModel: CarInfoViewModel) {
         self._viewModel = State(wrappedValue: viewModel)
     }
-    
+
+    private var gradient: some View {
+        RadialGradient(gradient: Gradient(colors: [.customSecondary, .customPrimary]),
+                       center: .top,
+                       startRadius: 250,
+                       endRadius: 500)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .ignoresSafeArea(edges: .bottom)
+    }
+
     var body: some View {
         VStack {
             HStack {
@@ -23,10 +32,10 @@ struct CarInfoView: View {
                 Text(viewModel.uiCar.model)
             }
             .font(.bold, size: .title)
-            
+
             Text(viewModel.uiCar.year)
                 .font(.regular, size: .body)
-            
+
             VStack {
                 ScrollView(showsIndicators: false) {
                     GroupBox("Datos del vehículo.") {
@@ -39,7 +48,7 @@ struct CarInfoView: View {
                     }
                     .groupBoxStyle(.materialized)
                     .padding([.top, .horizontal])
-                    
+
                     GroupBox("Características adicionales.") {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
@@ -48,7 +57,7 @@ struct CarInfoView: View {
                                 Text(viewModel.uiCar.formatedMilage)
                                     .font(.regular, size: .body)
                             }
-                            
+
                             Divider()
                                 .padding(.trailing)
                             HStack {
@@ -65,11 +74,11 @@ struct CarInfoView: View {
                                 Text(viewModel.uiCar.plateState.rawValue.capitalized)
                                     .font(.regular, size: .body)
                             }
-                            
+
                             if viewModel.shouldShowNotificationsRow {
                                 Divider()
                                     .padding(.trailing)
-                                Toggle(isOn: $viewModel.uiCar.verificationNotificationsEnabled){
+                                Toggle(isOn: $viewModel.uiCar.verificationNotificationsEnabled) {
                                     Text("Recibir notificaciones sobre verificaciones.")
                                         .font(.semibold, size: .body)
                                 }
@@ -83,11 +92,7 @@ struct CarInfoView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background {
-                RadialGradient(gradient: Gradient(colors: [.customSecondary, .customPrimary]), center: .top, startRadius: 250, endRadius: 500)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .ignoresSafeArea(edges: .bottom)
-            }
+            .background(gradient)
             .shadow(radius: 10, y: 10)
         }
         .navigationBarBackButtonHidden()
@@ -107,7 +112,9 @@ struct CarInfoView: View {
 
 #if DEBUG
 #Preview("Normal") {
-    CarInfoView(viewModel: .init(uiCar: .previewCar, adapter: CarAdapter(), notificationsManager: NotificationsManager()))
+    CarInfoView(viewModel: .init(uiCar: .previewCar,
+                                 adapter: CarAdapter(),
+                                 notificationsManager: NotificationsManager()))
 }
 
 #Preview("Inside NavStack") {
@@ -115,8 +122,10 @@ struct CarInfoView: View {
         ZStack {
             Color.customBackground
                 .ignoresSafeArea()
-            
-            CarInfoView(viewModel: .init(uiCar: .previewCar, adapter: CarAdapter(), notificationsManager: NotificationsManager()))
+
+            CarInfoView(viewModel: .init(uiCar: .previewCar,
+                                         adapter: CarAdapter(),
+                                         notificationsManager: NotificationsManager()))
         }
     }
 }
