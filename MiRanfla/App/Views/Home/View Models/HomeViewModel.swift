@@ -11,12 +11,12 @@ import Observation
 
 @Observable
 final class HomeViewModel {
-    
+
     private let adapter: CarAdapting
-    
+
     var cars = [UICar]()
     var showError = false
-    
+
     init(adapter: any CarAdapting) {
         self.adapter = adapter
     }

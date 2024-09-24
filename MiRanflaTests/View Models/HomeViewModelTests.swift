@@ -8,10 +8,10 @@
 import XCTest
 
 final class HomeViewModelTests: XCTestCase {
-    
+
     var sut: HomeViewModel!
     var mockAdapter: MockCarAdapter!
-    
+
     override func setUp() {
         super.setUp()
         mockAdapter = MockCarAdapter()
@@ -28,7 +28,7 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertTrue(sut.cars.isEmpty)
         XCTAssertFalse(sut.showError)
     }
-    
+
     func testFetchCars() {
         let mockCars = [UICar(id: .init(),
                               make: "",
@@ -39,19 +39,19 @@ final class HomeViewModelTests: XCTestCase {
                               tankCapacity: "",
                               plateState: .bajaCalifornia,
                               verificationNotificationsEnabled: true)]
-        
+
         mockAdapter.fetchResult = .success(mockCars)
-        
+
         sut.fetchCars()
-        
+
         XCTAssertFalse(sut.cars.isEmpty)
         XCTAssertEqual(sut.cars.count, 1)
         XCTAssertEqual(mockAdapter.receivedDescriptor?.sortBy, [SortDescriptor(\Car.make)])
 
         mockAdapter.fetchResult = .failure(NSError(domain: "com.miranfla.tests", code: 10))
-        
+
         sut.fetchCars()
-        
+
         XCTAssertTrue(sut.showError)
     }
 

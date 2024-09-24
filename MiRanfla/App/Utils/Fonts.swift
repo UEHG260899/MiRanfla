@@ -14,7 +14,7 @@ enum Fonts {
         case semibold = "Nunito-SemiBold"
         case bold = "Nunito-Bold"
     }
-    
+
     enum Size: CGFloat {
         case title = 34
         case body = 17
@@ -22,5 +22,3 @@ enum Fonts {
         case caption = 13
     }
 }
-
-

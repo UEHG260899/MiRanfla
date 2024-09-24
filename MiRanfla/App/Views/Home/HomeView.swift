@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct HomeView: View {
-    
+
     @State private var viewModel: HomeViewModel
-    
+
     private var columnItems: [GridItem] {
         [
             GridItem(.flexible(minimum: 120, maximum: .infinity), spacing: 10),
             GridItem(.flexible(minimum: 120, maximum: .infinity))
         ]
     }
-    
+
     init(viewModel: HomeViewModel) {
         self._viewModel = State(wrappedValue: viewModel)
     }
-    
+
     var body: some View {
         NavigationStack {
             GeometryReader { proxy in
@@ -39,19 +39,20 @@ struct HomeView: View {
                 }
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    
+
                     ToolbarItem(placement: .principal) {
                         Text("Tus autos")
                             .font(.bold, size: .body)
                     }
-                    
+
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button(action: {}) {
+                        Button {
+                        } label: {
                             Image(systemName: "plus")
                         }
                         .foregroundStyle(.accent)
                     }
-                    
+
                 }
                 .navigationDestination(for: UICar.self) { car in
                     CarInfoFactory.make(with: car)
@@ -69,13 +70,12 @@ struct HomeView: View {
     HomeView(viewModel: .init(adapter: CarAdapter()))
 }
 
-
 #Preview("With navigation") {
     NavigationStack {
         ZStack {
             Color.customBackground
                 .ignoresSafeArea()
-            
+
             HomeView(viewModel: .init(adapter: CarAdapter()))
         }
     }

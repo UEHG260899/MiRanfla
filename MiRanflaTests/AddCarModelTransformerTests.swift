@@ -10,12 +10,11 @@ import XCTest
 import SwiftData
 
 final class AddCarModelTransformerTests: XCTestCase {
-    
+    // swiftlint:disable:next force_try
     let container = try! ModelContainer(for: Car.self, configurations: .init(isStoredInMemoryOnly: true))
-    
-    
+
     var sut: AddCarModelTransformer!
-    
+
     override func setUp() {
         super.setUp()
         sut = AddCarModelTransformer()
@@ -25,15 +24,18 @@ final class AddCarModelTransformerTests: XCTestCase {
         sut = nil
         super.tearDown()
     }
-    
+
     func testTransformToStorageModelThrowsWhenInvalidYearOrIntValuesAreProvided() throws {
         // Given
         let mockCarData = CarDataFormModel(id: .init(), make: "", model: "", year: "2024", lastPlateNumber: "4")
-        let mockCarSpecsData = CarSpecsFormModel(milage: "100", tankCapacity: "20", plateState: .aguascalientes, verificationNotifications: true)
-            
+        let mockCarSpecsData = CarSpecsFormModel(milage: "100",
+                                                 tankCapacity: "20",
+                                                 plateState: .aguascalientes,
+                                                 verificationNotifications: true)
+
         // When
         let transformedCar = try sut.transformToStorageModel(from: mockCarData, and: mockCarSpecsData)
-        
+
         // Then
         XCTAssertEqual(transformedCar.make, mockCarData.make)
         XCTAssertEqual(transformedCar.model, mockCarData.model)
@@ -47,19 +49,29 @@ final class AddCarModelTransformerTests: XCTestCase {
     func testTransformToStorageModelDefaultsToCDMXWhenRawValueIsNotCorrect() throws {
         // Given
         let mockCarData = CarDataFormModel(id: .init(), make: "", model: "", year: "2024", lastPlateNumber: "4")
-        let mockCarSpecsData = CarSpecsFormModel(milage: "100", tankCapacity: "20", plateState: .test, verificationNotifications: true)
+        let mockCarSpecsData = CarSpecsFormModel(milage: "100",
+                                                 tankCapacity: "20",
+                                                 plateState: .test,
+                                                 verificationNotifications: true)
 
         // When
         let car = try sut.transformToStorageModel(from: mockCarData, and: mockCarSpecsData)
-        
+
         // Then
         XCTAssertEqual(car.plateState.rawValue, UIStateInMexico.cdmx.rawValue)
     }
 
     func testTransformToUIModel() {
         // Given
-        let mockCar = Car(make: "Toyota", model: "Hillux", year: 2024, lastPlateNumber: 4, milage: 160, tankCapacity: 60, plateState: .aguascalientes, verificationNotificationsEnabled: true)
-        
+        let mockCar = Car(make: "Toyota",
+                          model: "Hillux",
+                          year: 2024,
+                          lastPlateNumber: 4,
+                          milage: 160,
+                          tankCapacity: 60,
+                          plateState: .aguascalientes,
+                          verificationNotificationsEnabled: true)
+
         // When
         let uiCar = sut.transformToUIModel(from: mockCar)
 

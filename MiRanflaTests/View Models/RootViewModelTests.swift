@@ -9,7 +9,7 @@
 import XCTest
 
 final class RootViewModelTests: XCTestCase {
-        
+
     func testInitProperties() {
         let sut = RootViewModel(adapter: MockCarAdapter())
         XCTAssertEqual(sut.screenToShow, .noCar)
@@ -23,7 +23,7 @@ final class RootViewModelTests: XCTestCase {
 
         // When
         let sut = RootViewModel(adapter: adapter, notificationsObserver: notificationObserver)
-        
+
         // Then
         XCTAssertEqual(sut.screenToShow, .home)
         XCTAssertFalse(notificationObserver.calledMethods.contains(.addObserver))
@@ -36,24 +36,23 @@ final class RootViewModelTests: XCTestCase {
 
         // When
         let sut = RootViewModel(adapter: adapter, notificationsObserver: notificationObserver)
-        
+
         // Then
         XCTAssertEqual(sut.screenToShow, .noCar)
         XCTAssertTrue(notificationObserver.calledMethods.contains(.addObserver))
     }
-    
+
     func testShowHome() async {
         // Given
         let adapter = MockCarAdapter()
         let notificationObserver = MockNotificationObserver()
 
         let sut = RootViewModel(adapter: adapter, notificationsObserver: notificationObserver)
-        
+
         // When
         sut.showHome()
         try? await Task.sleep(for: .milliseconds(50))
-        
-        
+
         // Then
         XCTAssertEqual(sut.screenToShow, .home)
         XCTAssertTrue(notificationObserver.calledMethods.contains(.removeObserver))

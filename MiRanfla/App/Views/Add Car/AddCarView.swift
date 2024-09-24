@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct AddCarView: View {
-    
+
     @Environment(\.dismiss) var dismiss
     @State private var viewModel: AddCarViewModel
-    
+
     init(viewModel: AddCarViewModel) {
         self._viewModel = State(wrappedValue: viewModel)
     }
@@ -21,7 +21,7 @@ struct AddCarView: View {
             ZStack {
                 Color.customBackground
                     .ignoresSafeArea()
-                
+
                 Form {
                     CarDataSectionView(data: $viewModel.carDataForm)
                     CarSpecsSectionView(data: $viewModel.carSpecsForm,
@@ -30,18 +30,20 @@ struct AddCarView: View {
                 .scrollContentBackground(.hidden)
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button(action: { dismiss() }) {
+                        Button {
+                            dismiss()
+                        } label: {
                             Text("Cancelar")
                                 .font(.regular, size: .body)
                         }
                         .foregroundStyle(.accent)
                     }
-                    
+
                     ToolbarItem(placement: .principal) {
                         Text("Agregar auto")
                             .font(.semibold, size: .body)
                     }
-                    
+
                     ToolbarItem(placement: .primaryAction) {
                         Button {
                             Task {
@@ -65,9 +67,9 @@ struct AddCarView: View {
 #if DEBUG
 #Preview {
     struct AddCarViewWrapper: View {
-        
+
         @State private var showSheet = true
-        
+
         var body: some View {
             Button("Press me") {
                 showSheet = true
@@ -78,7 +80,7 @@ struct AddCarView: View {
             }
         }
     }
-    
+
     return AddCarViewWrapper()
 }
 #endif

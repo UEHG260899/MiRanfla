@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct NoCarsView: View {
-    
+
     @State var presentCarForm = false
-    
+
     var body: some View {
         VStack {
             Button {
@@ -21,11 +21,11 @@ struct NoCarsView: View {
                     .foregroundStyle(.customPrimary)
                     .frame(width: 80, height: 80)
             }
-            
+
             Text("Aún no tienes ningún auto agregado")
                 .multilineTextAlignment(.center)
                 .font(.bold, size: .title)
-            
+
             Text("Haz click en el símbolo de + para agregar uno.")
                 .font(.regular, size: .body)
         }
@@ -40,12 +40,11 @@ struct NoCarsView: View {
     NoCarsView()
 }
 
-
 #Preview("With BG Color") {
     ZStack {
         Color.customBackground
             .ignoresSafeArea()
-        
+
         NoCarsView()
     }
 }

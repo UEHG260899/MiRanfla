@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct CarSpecsSectionView: View {
-    
+
     @Binding var data: CarSpecsFormModel
     let showVerificationRow: Bool
-    
+
     var body: some View {
         Section {
             TextField("Kilometraje", text: $data.milage)
                 .font(.regular, size: .body)
-            
+
             TextField("Capacidad del tanque", text: $data.tankCapacity)
                 .font(.regular, size: .body)
-            
+
             Picker(selection: $data.plateState) {
                 ForEach(UIStateInMexico.allCases, id: \.self) { state in
                     Text(state.rawValue)
@@ -31,7 +31,7 @@ struct CarSpecsSectionView: View {
             }
             .tint(.customPrimary)
             .padding(.vertical, 4)
-            
+
             if showVerificationRow {
                 Toggle(isOn: $data.verificationNotifications) {
                     Text("Recibir notificaciones sobre verificaciones.")
@@ -43,6 +43,7 @@ struct CarSpecsSectionView: View {
             Text("Características adicionales")
                 .font(.regular, size: .caption)
         } footer: {
+            // swiftlint:disable:next line_length
             Text("Estos datos serán usados para los cálculos de consumo de combustible y algunas notificaciones relacionadas.")
                 .font(.regular, size: .caption)
         }

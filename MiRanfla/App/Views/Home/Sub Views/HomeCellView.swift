@@ -8,23 +8,29 @@
 import SwiftUI
 
 struct HomeCellView: View {
-    
+
     let carMake: String
     let carModel: String
     let size: CGFloat
-    
+
+    // swiftlint:disable:next line_length
+    private let gradient: RadialGradient = RadialGradient(gradient: Gradient(colors: [.customSecondary, .customPrimary]),
+                                                          center: .top,
+                                                          startRadius: 50,
+                                                          endRadius: 100)
+
     var body: some View {
         VStack(alignment: .leading) {
             Text(carMake)
                 .font(.semibold, size: .body)
-            
+
             Text(carModel)
                 .font(.regular, size: .description)
         }
         .foregroundStyle(.text)
         .padding([.leading, .bottom])
         .frame(width: abs(size), height: abs(size), alignment: .bottomLeading)
-        .background(RadialGradient(gradient: Gradient(colors: [.customSecondary, .customPrimary]), center: .top, startRadius: 50, endRadius: 100), in: RoundedRectangle(cornerRadius: 8))
+        .background(gradient, in: RoundedRectangle(cornerRadius: 8))
     }
 }
 
