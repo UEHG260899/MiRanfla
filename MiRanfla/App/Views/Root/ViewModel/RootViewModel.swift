@@ -10,7 +10,7 @@ import Observation
 
 
 @Observable
-class RootViewModel {
+final class RootViewModel {
     
     enum ScreenToShow {
         case noCar
@@ -18,13 +18,13 @@ class RootViewModel {
     }
     
     private let adapter: CarAdapting
-    private let notificationsProvider: NotificationsProviding
+    private let notificationsObserver: NotificationsObserving
     
     var screenToShow: ScreenToShow = .noCar
     
-    init(adapter: any CarAdapting, notificationsProvider: any NotificationsProviding = NotificationCenter.default) {
+    init(adapter: any CarAdapting, notificationsObserver: any NotificationsObserving = NotificationCenter.default) {
         self.adapter = adapter
-        self.notificationsProvider = notificationsProvider
+        self.notificationsObserver = notificationsObserver
         
         do {
             if try adapter.carCount() > 0 {
@@ -32,7 +32,7 @@ class RootViewModel {
                 return
             }
 
-            notificationsProvider.addObserver(self, selector: #selector(showHome), name: .NSPersistentStoreRemoteChange, object: nil)
+            notificationsObserver.addObserver(self, selector: #selector(showHome), name: .NSPersistentStoreRemoteChange, object: nil)
         } catch {}
     }
     
@@ -41,7 +41,7 @@ class RootViewModel {
         // TODO: Support case when user deletes all cars and redirect to no car view
         Task { @MainActor in
             screenToShow = .home
-            notificationsProvider.removeObserver(self)
+            notificationsObserver.removeObserver(self)
         }
     }
 }

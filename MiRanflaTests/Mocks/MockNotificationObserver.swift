@@ -1,5 +1,5 @@
 //
-//  MockNotificationProvider.swift
+//  MockNotificationObserver.swift
 //  MiRanflaTests
 //
 //  Created by Uriel Hernandez Gonzalez on 11/09/24.
@@ -8,7 +8,7 @@
 @testable import MiRanfla
 import Foundation
 
-final class MockNotificationProvider: NotificationsProviding {
+final class MockNotificationObserver: NotificationsObserving {
     struct CalledMethods: OptionSet {
         let rawValue: Int
         
