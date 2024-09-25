@@ -27,6 +27,7 @@ final class HomeViewModelTests: XCTestCase {
     func testInitialValues() {
         XCTAssertTrue(sut.cars.isEmpty)
         XCTAssertFalse(sut.showError)
+        XCTAssertFalse(sut.showAddCarView)
     }
 
     func testFetchCars() {
