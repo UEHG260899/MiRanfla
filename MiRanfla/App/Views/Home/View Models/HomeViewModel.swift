@@ -16,6 +16,7 @@ final class HomeViewModel {
 
     var cars = [UICar]()
     var showError = false
+    var showAddCarView = false
 
     init(adapter: any CarAdapting) {
         self.adapter = adapter

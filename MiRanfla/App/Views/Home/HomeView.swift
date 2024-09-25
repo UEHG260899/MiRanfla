@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
 
     @State private var viewModel: HomeViewModel
+    @State var text = ""
 
     private var columnItems: [GridItem] {
         [
@@ -39,28 +40,42 @@ struct HomeView: View {
                 }
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-
                     ToolbarItem(placement: .principal) {
                         Text("Tus autos")
                             .font(.bold, size: .body)
                     }
-
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                        } label: {
-                            Image(systemName: "plus")
-                        }
-                        .foregroundStyle(.accent)
-                    }
-
                 }
                 .navigationDestination(for: UICar.self) { car in
                     CarInfoFactory.make(with: car)
+                }
+                .safeAreaInset(edge: .bottom) {
+                    Group {
+                        HStack {
+                            HStack {
+                                Image(systemName: "magnifyingglass")
+
+                                TextField("Buscar", text: $text)
+                            }
+                            .padding(8)
+                            .background(.cardBackground, in: RoundedRectangle(cornerRadius: 12))
+
+                            Button {
+                                viewModel.showAddCarView = true
+                            } label: {
+                                Image(systemName: "plus")
+                            }
+                        }
+                        .padding([.horizontal, .top])
+                    }
+                    .background(.ultraThinMaterial)
                 }
             }
         }
         .onAppear {
             viewModel.fetchCars()
+        }
+        .sheet(isPresented: $viewModel.showAddCarView) {
+            AddCarFactory.make()
         }
     }
 }
