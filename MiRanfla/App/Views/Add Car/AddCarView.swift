@@ -48,6 +48,7 @@ struct AddCarView: View {
                         Button {
                             Task {
                                 await viewModel.save()
+                                dismiss()
                             }
                         } label: {
                             Text("Guardar")
@@ -75,9 +76,14 @@ struct AddCarView: View {
                 showSheet = true
             }
             .sheet(isPresented: $showSheet) {
-                // TODO: Create mock dependencies
-                AddCarFactory.make()
+                makeView()
             }
+        }
+
+        private func makeView() -> some View {
+            let adapter = PreviewCarAdapter()
+            let viewModel = AddCarViewModel(adapter: adapter, notificationsManager: NotificationsManager())
+            return AddCarView(viewModel: viewModel)
         }
     }
 

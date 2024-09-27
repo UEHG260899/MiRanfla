@@ -75,6 +75,8 @@ struct HomeView: View {
             viewModel.fetchCars()
         }
         .sheet(isPresented: $viewModel.showAddCarView) {
+            viewModel.fetchCars()
+        } content: {
             AddCarFactory.make()
         }
     }
@@ -82,7 +84,7 @@ struct HomeView: View {
 
 #if DEBUG
 #Preview("Normal") {
-    HomeView(viewModel: .init(adapter: CarAdapter()))
+    HomeView(viewModel: .init(adapter: PreviewCarAdapter()))
 }
 
 #Preview("With navigation") {
@@ -91,7 +93,7 @@ struct HomeView: View {
             Color.customBackground
                 .ignoresSafeArea()
 
-            HomeView(viewModel: .init(adapter: CarAdapter()))
+            HomeView(viewModel: .init(adapter: PreviewCarAdapter()))
         }
     }
 }
