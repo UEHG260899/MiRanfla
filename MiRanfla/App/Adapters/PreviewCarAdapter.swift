@@ -1,0 +1,36 @@
+//
+//  PreviewCarAdapter.swift
+//  MiRanfla
+//
+//  Created by Uriel Hernandez Gonzalez on 26/09/24.
+//
+
+import SwiftData
+
+#if DEBUG
+struct PreviewCarAdapter: CarAdapting {
+
+    var cars = [
+        UICar(id: .init(),
+              make: "Toyota",
+              model: "Avanza",
+              year: "2024",
+              lastPlateNumber: "2",
+              milage: "1000",
+              tankCapacity: "60",
+              plateState: .estadoDeMexico,
+              verificationNotificationsEnabled: false)
+    ]
+
+    func save(data: CarDataFormModel, specs: CarSpecsFormModel) throws {
+    }
+
+    func fetch(with descriptor: FetchDescriptor<Car>) throws -> [UICar] {
+        cars
+    }
+
+    func carCount() throws -> Int {
+        cars.count
+    }
+}
+#endif
