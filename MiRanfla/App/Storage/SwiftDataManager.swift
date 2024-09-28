@@ -27,8 +27,8 @@ class SwiftDataManager {
         try context.fetch(descriptor)
     }
 
-    func delete<T: PersistentModel>(object: T) throws {
-        context.delete(object)
+    func delete<T: PersistentModel>(objectType: T.Type, where predicate: Predicate<T>) throws {
+        try context.delete(model: objectType, where: predicate)
         try context.save()
     }
 

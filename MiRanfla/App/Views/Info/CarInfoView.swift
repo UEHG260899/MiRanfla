@@ -103,9 +103,34 @@ struct CarInfoView: View {
                         .tint(.accent)
                 }
             }
+
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button {
+                    viewModel.showDeletePrompt = true
+                } label: {
+                    Image(systemName: "trash")
+                        .tint(.accent)
+                }
+
+                Button {
+                } label: {
+                    Image(systemName: "pencil")
+                        .tint(.accent)
+                }
+            }
         }
         .alert("Ocurrió un error al momento de agendar las notificaciones", isPresented: $viewModel.showError) {
             Button("Ok", role: .none, action: {})
+        }
+        .alert("¿Estas seguro de querer eliminar este auto?", isPresented: $viewModel.showDeletePrompt) {
+            Button("Si", role: .destructive) {
+                viewModel.deleteCar()
+
+                if !viewModel.showError {
+                    dismiss()
+                }
+            }
+            Button("No", role: .cancel, action: {})
         }
     }
 }

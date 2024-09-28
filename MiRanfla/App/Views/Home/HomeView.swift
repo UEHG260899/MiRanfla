@@ -70,9 +70,9 @@ struct HomeView: View {
                     .background(.ultraThinMaterial)
                 }
             }
-        }
-        .onAppear {
-            viewModel.fetchCars()
+            .onAppear {
+                viewModel.fetchCars()
+            }
         }
         .sheet(isPresented: $viewModel.showAddCarView) {
             viewModel.fetchCars()

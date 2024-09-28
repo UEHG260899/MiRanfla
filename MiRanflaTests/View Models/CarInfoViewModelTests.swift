@@ -34,6 +34,7 @@ final class CarInfoViewModelTests: XCTestCase {
 
     func testInitialValues() {
         XCTAssertFalse(sut.showError)
+        XCTAssertFalse(sut.showDeletePrompt)
     }
 
     func testShouldShowNotificationsRow() {
@@ -95,5 +96,18 @@ final class CarInfoViewModelTests: XCTestCase {
                        "¡No te olvides de verificar!")
         XCTAssertEqual(mockNotificationsCenter.receivedNotificationRequest?.content.body,
                        "Tu \(car.make) \(car.model) verifica este mes.")
+    }
+
+    func testDeleteCar() {
+        // When doesn´t throw
+        sut.deleteCar()
+
+        XCTAssertEqual(sut.uiCar.id, mockAdapter.receivedUUID)
+
+        // When it throws
+        mockAdapter.deleteResult = .failure(NSError(domain: "com.miranfla.tests", code: 10))
+        sut.deleteCar()
+
+        XCTAssertTrue(sut.showError)
     }
 }

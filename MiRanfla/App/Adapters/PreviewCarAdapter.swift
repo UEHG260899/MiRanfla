@@ -5,6 +5,7 @@
 //  Created by Uriel Hernandez Gonzalez on 26/09/24.
 //
 
+import Foundation
 import SwiftData
 
 #if DEBUG
@@ -27,6 +28,9 @@ struct PreviewCarAdapter: CarAdapting {
 
     func fetch(with descriptor: FetchDescriptor<Car>) throws -> [UICar] {
         cars
+    }
+
+    func delete(carId: UUID) throws {
     }
 
     func carCount() throws -> Int {

@@ -11,6 +11,7 @@ import SwiftData
 protocol CarAdapting {
     func save(data: CarDataFormModel, specs: CarSpecsFormModel) throws
     func fetch(with descriptor: FetchDescriptor<Car>) throws -> [UICar]
+    func delete(carId: UUID) throws
     func carCount() throws -> Int
 }
 
@@ -34,6 +35,13 @@ struct CarAdapter: CarAdapting {
     func fetch(with descriptor: FetchDescriptor<Car>) throws -> [UICar] {
         let storageCars = try storageManager.fetch(descriptor: descriptor)
         return storageCars.map { transformer.transformToUIModel(from: $0) }
+    }
+
+    func delete(carId: UUID) throws {
+        let predicate = #Predicate<Car> { car in
+            car.id == carId
+        }
+        try storageManager.delete(objectType: Car.self, where: predicate)
     }
 
     func carCount() throws -> Int {
