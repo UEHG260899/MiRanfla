@@ -22,6 +22,7 @@ final class CarInfoViewModel {
         }
     }
     var showError = false
+    var showDeletePrompt = false
 
     init(uiCar: UICar, adapter: any CarAdapting, notificationsManager: NotificationsManager) {
         self.uiCar = uiCar
@@ -55,6 +56,14 @@ final class CarInfoViewModel {
             }
 
             notificationsManager.removeNotifications(for: uiCar.id.uuidString)
+        } catch {
+            showError = true
+        }
+    }
+
+    func deleteCar() {
+        do {
+            try adapter.delete(carId: uiCar.id)
         } catch {
             showError = true
         }
