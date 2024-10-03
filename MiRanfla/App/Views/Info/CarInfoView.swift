@@ -113,6 +113,7 @@ struct CarInfoView: View {
                 }
 
                 Button {
+                    viewModel.showEditCarView = true
                 } label: {
                     Image(systemName: "pencil")
                         .tint(.accent)
@@ -131,6 +132,11 @@ struct CarInfoView: View {
                 }
             }
             Button("No", role: .cancel, action: {})
+        }
+        .sheet(isPresented: $viewModel.showEditCarView) {
+            viewModel.refreshData()
+        } content: {
+            EditCarFactory.make(with: viewModel.uiCar)
         }
     }
 }

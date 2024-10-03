@@ -5,6 +5,8 @@
 //  Created by Uriel Hernandez Gonzalez on 20/09/24.
 //
 
+import Foundation
+import SwiftData
 import Observation
 
 @Observable
@@ -23,6 +25,7 @@ final class CarInfoViewModel {
     }
     var showError = false
     var showDeletePrompt = false
+    var showEditCarView = false
 
     init(uiCar: UICar, adapter: any CarAdapting, notificationsManager: NotificationsManager) {
         self.uiCar = uiCar
@@ -64,6 +67,20 @@ final class CarInfoViewModel {
     func deleteCar() {
         do {
             try adapter.delete(carId: uiCar.id)
+        } catch {
+            showError = true
+        }
+    }
+
+    func refreshData() {
+        do {
+            let id = uiCar.id
+            let predicate = #Predicate<Car> { car in
+                car.id == id
+            }
+            let descriptor = FetchDescriptor(predicate: predicate)
+            let updatedCar = try adapter.fetch(with: descriptor).first ?? .empty
+            uiCar = updatedCar
         } catch {
             showError = true
         }

@@ -35,6 +35,7 @@ final class CarInfoViewModelTests: XCTestCase {
     func testInitialValues() {
         XCTAssertFalse(sut.showError)
         XCTAssertFalse(sut.showDeletePrompt)
+        XCTAssertFalse(sut.showEditCarView)
     }
 
     func testShouldShowNotificationsRow() {
@@ -108,6 +109,23 @@ final class CarInfoViewModelTests: XCTestCase {
         mockAdapter.deleteResult = .failure(NSError(domain: "com.miranfla.tests", code: 10))
         sut.deleteCar()
 
+        XCTAssertTrue(sut.showError)
+    }
+
+    func testRefreshData() {
+        // When doesn´t throw
+        mockAdapter.fetchResult = .success([.previewCar])
+        sut.refreshData()
+
+        XCTAssertNotNil(mockAdapter.receivedDescriptor?.predicate)
+        XCTAssertFalse(sut.showError)
+        XCTAssertEqual(sut.uiCar, .previewCar)
+
+        // When throws
+        mockAdapter.fetchResult = .failure(NSError(domain: "com.miranfla.tests", code: 10))
+
+        sut.refreshData()
+        
         XCTAssertTrue(sut.showError)
     }
 }
