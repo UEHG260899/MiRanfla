@@ -14,15 +14,19 @@ struct CarDataSectionView: View {
     var body: some View {
         Section {
             TextField("Marca", text: $data.make)
+                .keyboardType(.default)
                 .font(.regular, size: .body)
 
             TextField("Modelo (ej. Corolla)", text: $data.model)
+                .keyboardType(.default)
                 .font(.regular, size: .body)
 
             TextField("Año", text: $data.year)
+                .keyboardType(.numberPad)
                 .font(.regular, size: .body)
 
             TextField("Terminación de la placa", text: $data.lastPlateNumber)
+                .keyboardType(.numberPad)
                 .font(.regular, size: .body)
         } header: {
             Text("Datos del vehículo")

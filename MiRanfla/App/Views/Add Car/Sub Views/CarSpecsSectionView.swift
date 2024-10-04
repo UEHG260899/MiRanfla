@@ -15,9 +15,11 @@ struct CarSpecsSectionView: View {
     var body: some View {
         Section {
             TextField("Kilometraje", text: $data.milage)
+                .keyboardType(.numberPad)
                 .font(.regular, size: .body)
 
             TextField("Capacidad del tanque", text: $data.tankCapacity)
+                .keyboardType(.numberPad)
                 .font(.regular, size: .body)
 
             Picker(selection: $data.plateState) {

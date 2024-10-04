@@ -55,6 +55,8 @@ struct HomeView: View {
                                 Image(systemName: "magnifyingglass")
 
                                 TextField("Buscar", text: $text)
+                                    .keyboardType(.default)
+                                    .font(.regular, size: .body)
                             }
                             .padding(8)
                             .background(.cardBackground, in: RoundedRectangle(cornerRadius: 12))
