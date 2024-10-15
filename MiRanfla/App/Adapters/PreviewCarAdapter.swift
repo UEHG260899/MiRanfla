@@ -20,6 +20,15 @@ struct PreviewCarAdapter: CarAdapting {
               milage: "1000",
               tankCapacity: "60",
               plateState: .estadoDeMexico,
+              verificationNotificationsEnabled: false),
+        UICar(id: .init(),
+              make: "VW",
+              model: "Vento",
+              year: "2015",
+              lastPlateNumber: "2",
+              milage: "110000",
+              tankCapacity: "60",
+              plateState: .nuevoLeon,
               verificationNotificationsEnabled: false)
     ]
 

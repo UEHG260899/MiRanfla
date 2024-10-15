@@ -26,6 +26,8 @@ final class HomeViewModelTests: XCTestCase {
 
     func testInitialValues() {
         XCTAssertTrue(sut.cars.isEmpty)
+        XCTAssertTrue(sut.filteredCars.isEmpty)
+        XCTAssertTrue(sut.searchQuery.isEmpty)
         XCTAssertFalse(sut.showError)
         XCTAssertFalse(sut.showAddCarView)
     }
@@ -47,6 +49,7 @@ final class HomeViewModelTests: XCTestCase {
 
         XCTAssertFalse(sut.cars.isEmpty)
         XCTAssertEqual(sut.cars.count, 1)
+        XCTAssertEqual(sut.cars.count, sut.filteredCars.count)
         XCTAssertEqual(mockAdapter.receivedDescriptor?.sortBy, [SortDescriptor(\Car.make)])
 
         mockAdapter.fetchResult = .failure(NSError(domain: "com.miranfla.tests", code: 10))
@@ -54,6 +57,40 @@ final class HomeViewModelTests: XCTestCase {
         sut.fetchCars()
 
         XCTAssertTrue(sut.showError)
+    }
+
+    func testFilterResults() {
+        let mockCars = [UICar(id: .init(),
+                              make: "Toyota",
+                              model: "",
+                              year: "",
+                              lastPlateNumber: "",
+                              milage: "",
+                              tankCapacity: "",
+                              plateState: .bajaCalifornia,
+                              verificationNotificationsEnabled: true),
+                        UICar(id: .init(),
+                              make: "VW",
+                              model: "",
+                              year: "",
+                              lastPlateNumber: "",
+                              milage: "",
+                              tankCapacity: "",
+                              plateState: .bajaCalifornia,
+                              verificationNotificationsEnabled: true)]
+
+        mockAdapter.fetchResult = .success(mockCars)
+
+        sut.fetchCars()
+
+        // When query is empty
+        XCTAssertEqual(sut.cars, sut.filteredCars)
+
+        // When query contains soething
+        sut.searchQuery = "Toyota"
+
+        XCTAssertEqual(sut.filteredCars.count, 1)
+        XCTAssertEqual(sut.cars.count, 2)
     }
 
 }
