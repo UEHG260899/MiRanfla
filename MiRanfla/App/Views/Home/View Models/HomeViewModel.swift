@@ -15,6 +15,12 @@ final class HomeViewModel {
     private let adapter: CarAdapting
 
     var cars = [UICar]()
+    var filteredCars = [UICar]()
+    var searchQuery = "" {
+        didSet {
+            filterResults(query: searchQuery)
+        }
+    }
     var showError = false
     var showAddCarView = false
 
@@ -26,8 +32,18 @@ final class HomeViewModel {
         do {
             let descriptor = FetchDescriptor<Car>(sortBy: [SortDescriptor(\.make)])
             self.cars = try adapter.fetch(with: descriptor)
+            self.filteredCars = cars
         } catch {
             showError = true
         }
+    }
+
+    private func filterResults(query: String) {
+        guard !query.isEmpty else {
+            filteredCars = cars
+            return
+        }
+
+        filteredCars = cars.filter { $0.make.lowercased().contains(searchQuery.lowercased()) }
     }
 }

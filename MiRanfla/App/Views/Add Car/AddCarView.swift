@@ -57,6 +57,7 @@ struct AddCarView: View {
                         .foregroundStyle(.accent)
                     }
                 }
+                .navigationBarTitleDisplayMode(.inline)
             }
             .alert("Ocurrió un error al momento de agregar el auto", isPresented: $viewModel.showError) {
                 Button("Ok", role: .none, action: {})

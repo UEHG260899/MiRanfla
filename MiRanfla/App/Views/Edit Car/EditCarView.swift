@@ -58,6 +58,7 @@ struct EditCarView: View {
 
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
             .alert("Ocurrió un error al momento de agregar el auto", isPresented: $viewModel.showError) {
                 Button("Ok", role: .none, action: {})
             }
@@ -66,6 +67,6 @@ struct EditCarView: View {
 }
 
 #Preview {
-    EditCarView(viewModel: .init(car: .previewCar, 
+    EditCarView(viewModel: .init(car: .previewCar,
                                  adapter: PreviewCarAdapter()))
 }

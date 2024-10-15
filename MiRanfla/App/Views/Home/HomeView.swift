@@ -28,7 +28,7 @@ struct HomeView: View {
             GeometryReader { proxy in
                 ScrollView {
                     LazyVGrid(columns: columnItems, spacing: 10) {
-                        ForEach(viewModel.cars, id: \.id) { car in
+                        ForEach(viewModel.filteredCars, id: \.id) { car in
                             NavigationLink(value: car) {
                                 HomeCellView(carMake: car.make,
                                              carModel: car.model,
@@ -37,6 +37,7 @@ struct HomeView: View {
                         }
                     }
                     .padding(.horizontal, 12)
+                    .animation(.bouncy, value: viewModel.filteredCars)
                 }
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -49,27 +50,9 @@ struct HomeView: View {
                     CarInfoFactory.make(with: car)
                 }
                 .safeAreaInset(edge: .bottom) {
-                    Group {
-                        HStack {
-                            HStack {
-                                Image(systemName: "magnifyingglass")
-
-                                TextField("Buscar", text: $text)
-                                    .keyboardType(.default)
-                                    .font(.regular, size: .body)
-                            }
-                            .padding(8)
-                            .background(.cardBackground, in: RoundedRectangle(cornerRadius: 12))
-
-                            Button {
-                                viewModel.showAddCarView = true
-                            } label: {
-                                Image(systemName: "plus")
-                            }
-                        }
-                        .padding([.horizontal, .top])
+                    SearchFooterView(query: $viewModel.searchQuery) {
+                        viewModel.showAddCarView = true
                     }
-                    .background(.ultraThinMaterial)
                 }
             }
             .onAppear {
