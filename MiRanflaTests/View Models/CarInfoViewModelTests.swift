@@ -125,7 +125,7 @@ final class CarInfoViewModelTests: XCTestCase {
         mockAdapter.fetchResult = .failure(NSError(domain: "com.miranfla.tests", code: 10))
 
         sut.refreshData()
-        
+
         XCTAssertTrue(sut.showError)
     }
 }

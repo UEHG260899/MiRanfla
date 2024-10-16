@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Charts
 
 struct CarInfoView: View {
 
@@ -86,6 +87,28 @@ struct CarInfoView: View {
                                 .tint(.customPrimary)
                             }
                         }
+                    }
+                    .groupBoxStyle(.materialized)
+                    .padding([.top, .horizontal])
+
+                    GroupBox("Consumo de Gasolina") {
+                        Chart(UIGasLog.mockLogs) {
+                            LineMark(
+                                x: .value("Month", $0.date),
+                                y: .value("Price", $0.consumption)
+                            )
+                            .symbol {
+                                Circle()
+                                    .fill(Color.text)
+                                    .frame(width: 8)
+                            }
+                            .interpolationMethod(.catmullRom)
+                        }
+                        .chartYAxisLabel(position: .trailing, alignment: .center, spacing: 0) {
+                            Text("Km/Litro")
+                                .font(.medium, size: .footnote)
+                        }
+                        .padding(.trailing, 4)
                     }
                     .groupBoxStyle(.materialized)
                     .padding([.top, .horizontal])

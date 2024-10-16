@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct SearchFooterView: View {
-    
+
     @Binding var query: String
     let action: () -> Void
-    
+
     var body: some View {
         Group {
             HStack {
