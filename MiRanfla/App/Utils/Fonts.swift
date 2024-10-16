@@ -20,5 +20,6 @@ enum Fonts {
         case body = 17
         case description = 15
         case caption = 13
+        case footnote = 11
     }
 }
