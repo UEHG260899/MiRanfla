@@ -26,6 +26,7 @@ final class CarInfoViewModel {
     var showError = false
     var showDeletePrompt = false
     var showEditCarView = false
+    var showAddGasLog = false
 
     init(uiCar: UICar, adapter: any CarAdapting, notificationsManager: NotificationsManager) {
         self.uiCar = uiCar
