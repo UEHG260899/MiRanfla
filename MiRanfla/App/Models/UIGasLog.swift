@@ -17,6 +17,7 @@ struct UIGasLog: Identifiable {
         Double(milage) / liters
     }
 
+    // Graph init
     init(month: Int, price: Decimal, liters: Double, milage: Int, id: UUID = UUID()) {
         self.id = id
         self.price = price
@@ -24,6 +25,14 @@ struct UIGasLog: Identifiable {
         self.milage = milage
         let calendar = Calendar.autoupdatingCurrent
         self.date = calendar.date(from: DateComponents(month: month))!
+    }
+
+    init(date: Date, price: Decimal, liters: Double, milage: Int, id: UUID = UUID()) {
+        self.id = id
+        self.date = date
+        self.price = price
+        self.liters = liters
+        self.milage = milage
     }
 }
 

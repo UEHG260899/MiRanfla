@@ -92,23 +92,37 @@ struct CarInfoView: View {
                     .padding([.top, .horizontal])
 
                     GroupBox("Consumo de Gasolina") {
-                        Chart(UIGasLog.mockLogs) {
-                            LineMark(
-                                x: .value("Month", $0.date),
-                                y: .value("Price", $0.consumption)
-                            )
-                            .symbol {
-                                Circle()
-                                    .fill(Color.text)
-                                    .frame(width: 8)
+                        VStack(spacing: 16) {
+                            Chart(UIGasLog.mockLogs) {
+                                LineMark(
+                                    x: .value("Month", $0.date),
+                                    y: .value("Price", $0.consumption)
+                                )
+                                .symbol {
+                                    Circle()
+                                        .fill(Color.text)
+                                        .frame(width: 8)
+                                }
+                                .interpolationMethod(.catmullRom)
                             }
-                            .interpolationMethod(.catmullRom)
+                            .chartYAxisLabel(position: .trailing, alignment: .center, spacing: 0) {
+                                Text("Km/Litro")
+                                    .font(.medium, size: .footnote)
+                            }
+                            .padding(.trailing, 4)
+
+                            Button {
+                                viewModel.showAddGasLog = true
+                            } label: {
+                                Text("Agregar registro")
+                                    .font(.medium, size: .body)
+                                    .padding(.vertical, 8)
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .background(.customPrimary, in: RoundedRectangle(cornerRadius: 8))
+                            .padding(.trailing)
+                            .foregroundStyle(Color.text)
                         }
-                        .chartYAxisLabel(position: .trailing, alignment: .center, spacing: 0) {
-                            Text("Km/Litro")
-                                .font(.medium, size: .footnote)
-                        }
-                        .padding(.trailing, 4)
                     }
                     .groupBoxStyle(.materialized)
                     .padding([.top, .horizontal])
@@ -160,6 +174,10 @@ struct CarInfoView: View {
             viewModel.refreshData()
         } content: {
             EditCarFactory.make(with: viewModel.uiCar)
+        }
+        .sheet(isPresented: $viewModel.showAddGasLog) {
+        } content: {
+            AddGasLogView()
         }
     }
 }
