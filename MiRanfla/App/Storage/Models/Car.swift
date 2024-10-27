@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Car {
+final class Car {
     @Attribute(.unique)
     var id: UUID
     var make: String
@@ -21,6 +21,9 @@ class Car {
     var plateState: StateInMexico
     var verificationNotificationsEnabled: Bool
 
+    @Relationship(deleteRule: .cascade, inverse: \GasLog.car)
+    var gasLogs: [GasLog]
+
     init(make: String,
          model: String,
          year: UInt,
@@ -29,6 +32,7 @@ class Car {
          tankCapacity: UInt,
          plateState: StateInMexico,
          verificationNotificationsEnabled: Bool,
+         gasLogs: [GasLog] = [GasLog](),
          id: UUID = UUID()) {
         self.id = id
         self.make = make
@@ -38,6 +42,7 @@ class Car {
         self.milage = milage
         self.tankCapacity = tankCapacity
         self.plateState = plateState
+        self.gasLogs = gasLogs
         self.verificationNotificationsEnabled = verificationNotificationsEnabled
     }
 

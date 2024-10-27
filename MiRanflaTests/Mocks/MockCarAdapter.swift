@@ -12,6 +12,7 @@ import SwiftData
 final class MockCarAdapter: CarAdapting {
 
     var saveResult: Result<Void, Error> = .success(())
+    var addResult: Result<Void, Error> = .success(())
     var fetchResult: Result<[UICar], Error> = .success([UICar]())
     var deleteResult: Result<Void, Error> = .success(())
     var receivedDescriptor: FetchDescriptor<Car>?
@@ -20,6 +21,12 @@ final class MockCarAdapter: CarAdapting {
 
     func save(data: CarDataFormModel, specs: CarSpecsFormModel) throws {
         if case let .failure(error) = saveResult {
+            throw error
+        }
+    }
+
+    func add(log: MiRanfla.GasLogFormData, carId: UUID) throws {
+        if case let .failure(error) = addResult {
             throw error
         }
     }

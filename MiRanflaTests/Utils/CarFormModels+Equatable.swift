@@ -8,7 +8,7 @@
 @testable import MiRanfla
 import Foundation
 
-extension CarDataFormModel: Equatable {
+extension CarDataFormModel: @retroactive Equatable {
     public static func == (lhs: CarDataFormModel, rhs: CarDataFormModel) -> Bool {
         return lhs.make == rhs.make &&
         lhs.model == rhs.model &&
@@ -17,7 +17,7 @@ extension CarDataFormModel: Equatable {
     }
 }
 
-extension CarSpecsFormModel: Equatable {
+extension CarSpecsFormModel: @retroactive Equatable {
     public static func == (lhs: CarSpecsFormModel, rhs: CarSpecsFormModel) -> Bool {
         return lhs.milage == rhs.milage &&
         lhs.tankCapacity == rhs.tankCapacity &&

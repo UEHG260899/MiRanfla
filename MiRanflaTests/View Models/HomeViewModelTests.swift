@@ -41,6 +41,7 @@ final class HomeViewModelTests: XCTestCase {
                               milage: "",
                               tankCapacity: "",
                               plateState: .bajaCalifornia,
+                              gasLogs: UIGasLog.mockLogs,
                               verificationNotificationsEnabled: true)]
 
         mockAdapter.fetchResult = .success(mockCars)
@@ -68,6 +69,7 @@ final class HomeViewModelTests: XCTestCase {
                               milage: "",
                               tankCapacity: "",
                               plateState: .bajaCalifornia,
+                              gasLogs: UIGasLog.mockLogs,
                               verificationNotificationsEnabled: true),
                         UICar(id: .init(),
                               make: "VW",
@@ -77,6 +79,7 @@ final class HomeViewModelTests: XCTestCase {
                               milage: "",
                               tankCapacity: "",
                               plateState: .bajaCalifornia,
+                              gasLogs: UIGasLog.mockLogs,
                               verificationNotificationsEnabled: true)]
 
         mockAdapter.fetchResult = .success(mockCars)

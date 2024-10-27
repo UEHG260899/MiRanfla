@@ -9,13 +9,14 @@
 import SwiftData
 import XCTest
 
+// TODO: Add more tests for this class
 final class CarAdapterTests: XCTestCase {
 
     func testSave() throws {
         let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
         let mockStorage = MockSwiftDataManager(container: try ModelContainer(for: Car.self,
                                                                              configurations: configuration))
-        let sut = CarAdapter(transformer: .init(), storageManager: mockStorage)
+        let sut = CarAdapter(carTransformer: .init(), storageManager: mockStorage)
 
         let mockData = CarDataFormModel(id: .init(), make: "", model: "", year: "2024", lastPlateNumber: "4")
         let mockSpecs = CarSpecsFormModel(milage: "100",
