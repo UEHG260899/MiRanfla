@@ -10,8 +10,11 @@ import SwiftUI
 struct AddGasLogView: View {
 
     @Environment(\.dismiss) private var dismiss
-    @State private var text = ""
-    @State private var date: Date = .now
+    @State private var viewModel: AddGasLogViewModel
+
+    init(viewModel: AddGasLogViewModel) {
+        self.viewModel = viewModel
+    }
 
     var body: some View {
         NavigationStack {
@@ -21,24 +24,24 @@ struct AddGasLogView: View {
 
                 Form {
                     Section {
-                        DatePicker(selection: $date, displayedComponents: .date) {
+                        DatePicker(selection: $viewModel.gasLogFormData.date, displayedComponents: .date) {
                             Text("Fecha")
                                 .font(.regular, size: .body)
                         }
 
-                        TextField(text: $text) {
+                        TextField(text: $viewModel.gasLogFormData.price) {
                             Text("Costo Total")
                                 .font(.regular, size: .body)
                         }
                         .keyboardType(.decimalPad)
 
-                        TextField(text: $text) {
+                        TextField(text: $viewModel.gasLogFormData.liters) {
                             Text("Litros cargados")
                                 .font(.regular, size: .body)
                         }
                         .keyboardType(.decimalPad)
-                        
-                        TextField(text: $text) {
+
+                        TextField(text: $viewModel.gasLogFormData.milage) {
                             Text("Kilometros recorridos")
                                 .font(.regular, size: .body)
                         }
@@ -63,6 +66,8 @@ struct AddGasLogView: View {
 
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Guardar") {
+                        viewModel.save()
+                        dismiss()
                     }
                     .tint(.accent)
                 }
@@ -90,7 +95,7 @@ struct AddGasLogView: View {
         }
 
         private func makeView() -> some View {
-            AddGasLogView()
+            AddGasLogView(viewModel: .init(carId: UUID(), carAdapter: PreviewCarAdapter()))
         }
     }
 

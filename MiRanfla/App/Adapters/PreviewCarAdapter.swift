@@ -20,6 +20,7 @@ struct PreviewCarAdapter: CarAdapting {
               milage: "1000",
               tankCapacity: "60",
               plateState: .estadoDeMexico,
+              gasLogs: [UIGasLog](),
               verificationNotificationsEnabled: false),
         UICar(id: .init(),
               make: "VW",
@@ -29,10 +30,14 @@ struct PreviewCarAdapter: CarAdapting {
               milage: "110000",
               tankCapacity: "60",
               plateState: .nuevoLeon,
+              gasLogs: [UIGasLog](),
               verificationNotificationsEnabled: false)
     ]
 
     func save(data: CarDataFormModel, specs: CarSpecsFormModel) throws {
+    }
+
+    func add(log: GasLogFormData, carId: UUID) throws {
     }
 
     func fetch(with descriptor: FetchDescriptor<Car>) throws -> [UICar] {

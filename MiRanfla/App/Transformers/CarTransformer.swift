@@ -1,5 +1,5 @@
 //
-//  AddCarModelTransformer.swift
+//  CarTransformer.swift
 //  MiRanfla
 //
 //  Created by Uriel Hernandez Gonzalez on 09/09/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AddCarModelTransformer {
+struct CarTransformer {
 
     func transformToStorageModel(from carDataForm: CarDataFormModel,
                                  and carSpecsForm: CarSpecsFormModel) throws -> Car {
@@ -24,7 +24,7 @@ struct AddCarModelTransformer {
         return car
     }
 
-    func transformToUIModel(from car: Car) -> UICar {
+    func transformToUIModel(from car: Car, gasLogs: [UIGasLog]) -> UICar {
         UICar(id: car.id,
               make: car.make,
               model: car.model,
@@ -33,6 +33,7 @@ struct AddCarModelTransformer {
               milage: String(describing: car.milage),
               tankCapacity: String(describing: car.tankCapacity),
               plateState: UIStateInMexico(rawValue: car.plateState.rawValue) ?? .cdmx,
+              gasLogs: gasLogs,
               verificationNotificationsEnabled: car.verificationNotificationsEnabled)
     }
 }

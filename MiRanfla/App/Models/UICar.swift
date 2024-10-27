@@ -24,6 +24,7 @@ struct UICar: Hashable {
     let milage: String
     let tankCapacity: String
     let plateState: UIStateInMexico
+    let gasLogs: [UIGasLog]
     var verificationNotificationsEnabled: Bool
 
     var formatedMilage: String {
@@ -45,6 +46,7 @@ extension UICar {
                              milage: "",
                              tankCapacity: "",
                              plateState: .cdmx,
+                             gasLogs: [UIGasLog](),
                              verificationNotificationsEnabled: false)
 
     static let previewCar = UICar(id: UUID(),
@@ -55,6 +57,7 @@ extension UICar {
                                   milage: "150000",
                                   tankCapacity: "60",
                                   plateState: .estadoDeMexico,
+                                  gasLogs: [.init(date: .now, price: 100, liters: 20, milage: 100)],
                                   verificationNotificationsEnabled: false)
 }
 #endif

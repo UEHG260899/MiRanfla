@@ -1,5 +1,5 @@
 //
-//  AddCarModelTransformerTests.swift
+//  CarTransformerTests.swift
 //  MiRanflaTests
 //
 //  Created by Uriel Hernandez Gonzalez on 09/09/24.
@@ -9,15 +9,15 @@
 import XCTest
 import SwiftData
 
-final class AddCarModelTransformerTests: XCTestCase {
+final class CarTransformerTests: XCTestCase {
     // swiftlint:disable:next force_try
     let container = try! ModelContainer(for: Car.self, configurations: .init(isStoredInMemoryOnly: true))
 
-    var sut: AddCarModelTransformer!
+    var sut: CarTransformer!
 
     override func setUp() {
         super.setUp()
-        sut = AddCarModelTransformer()
+        sut = CarTransformer()
     }
 
     override func tearDown() {
@@ -73,7 +73,7 @@ final class AddCarModelTransformerTests: XCTestCase {
                           verificationNotificationsEnabled: true)
 
         // When
-        let uiCar = sut.transformToUIModel(from: mockCar)
+        let uiCar = sut.transformToUIModel(from: mockCar, gasLogs: UIGasLog.mockLogs)
 
         // Then
         XCTAssertEqual(uiCar.id, mockCar.id)
@@ -84,6 +84,7 @@ final class AddCarModelTransformerTests: XCTestCase {
         XCTAssertEqual(uiCar.milage, String(describing: mockCar.milage))
         XCTAssertEqual(uiCar.tankCapacity, String(describing: mockCar.tankCapacity))
         XCTAssertEqual(uiCar.plateState, .aguascalientes)
+        XCTAssertEqual(uiCar.gasLogs.count, UIGasLog.mockLogs.count)
         XCTAssertEqual(uiCar.verificationNotificationsEnabled, mockCar.verificationNotificationsEnabled)
     }
 }

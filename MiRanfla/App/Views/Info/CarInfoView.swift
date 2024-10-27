@@ -176,9 +176,11 @@ struct CarInfoView: View {
             EditCarFactory.make(with: viewModel.uiCar)
         }
         .sheet(isPresented: $viewModel.showAddGasLog) {
+            viewModel.refreshData()
         } content: {
-            AddGasLogView()
+            AddGasLogFactory.make(carId: viewModel.uiCar.id)
         }
+        // TODO: Use enum based oresentation logic
     }
 }
 

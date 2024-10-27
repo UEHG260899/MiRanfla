@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UIGasLog: Identifiable {
+struct UIGasLog: Identifiable, Hashable {
     let id: UUID
     let date: Date
     let price: Decimal

@@ -49,6 +49,7 @@ final class CarInfoViewModelTests: XCTestCase {
                     milage: "",
                     tankCapacity: "",
                     plateState: .chiapas,
+                    gasLogs: UIGasLog.mockLogs,
                     verificationNotificationsEnabled: false)
 
         sut = CarInfoViewModel(uiCar: car,
