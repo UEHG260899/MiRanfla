@@ -113,7 +113,7 @@ struct CarInfoView: View {
                             .animation(.easeOut, value: viewModel.uiCar.gasLogs)
 
                             Button {
-                                viewModel.showAddGasLog = true
+                                viewModel.presentedScreen = .addGasLog
                             } label: {
                                 Text("Agregar registro")
                                     .font(.medium, size: .body)
@@ -151,7 +151,7 @@ struct CarInfoView: View {
                 }
 
                 Button {
-                    viewModel.showEditCarView = true
+                    viewModel.presentedScreen = .editCar
                 } label: {
                     Image(systemName: "pencil")
                         .tint(.accent)
@@ -171,17 +171,16 @@ struct CarInfoView: View {
             }
             Button("No", role: .cancel, action: {})
         }
-        .sheet(isPresented: $viewModel.showEditCarView) {
+        .sheet(item: $viewModel.presentedScreen) {
             viewModel.refreshData()
-        } content: {
-            EditCarFactory.make(with: viewModel.uiCar)
+        } content: { screen in
+            switch screen {
+            case .editCar:
+                EditCarFactory.make(with: viewModel.uiCar)
+            case .addGasLog:
+                AddGasLogFactory.make(carId: viewModel.uiCar.id)
+            }
         }
-        .sheet(isPresented: $viewModel.showAddGasLog) {
-            viewModel.refreshData()
-        } content: {
-            AddGasLogFactory.make(carId: viewModel.uiCar.id)
-        }
-        // TODO: Use enum based oresentation logic
     }
 }
 
