@@ -93,7 +93,7 @@ struct CarInfoView: View {
 
                     GroupBox("Consumo de Gasolina") {
                         VStack(spacing: 16) {
-                            Chart(UIGasLog.mockLogs) {
+                            Chart(viewModel.uiCar.gasLogs) {
                                 LineMark(
                                     x: .value("Month", $0.date),
                                     y: .value("Price", $0.consumption)
@@ -110,6 +110,7 @@ struct CarInfoView: View {
                                     .font(.medium, size: .footnote)
                             }
                             .padding(.trailing, 4)
+                            .animation(.easeOut, value: viewModel.uiCar.gasLogs)
 
                             Button {
                                 viewModel.showAddGasLog = true

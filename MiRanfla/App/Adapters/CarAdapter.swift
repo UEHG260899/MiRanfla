@@ -55,6 +55,7 @@ struct CarAdapter: CarAdapting {
         let storageCars = try storageManager.fetch(descriptor: descriptor)
         return storageCars.map { storageCar in
             let uiLogs = storageCar.gasLogs.map { gasLogTransformer.transformToUIModel(from: $0) }
+                .sorted { $0.date < $1.date }
             return carTransformer.transformToUIModel(from: storageCar, gasLogs: uiLogs)
         }
     }
