@@ -12,6 +12,15 @@ import Observation
 @Observable
 final class CarInfoViewModel {
 
+    enum PresentedScreen: Identifiable {
+        case editCar
+        case addGasLog
+
+        var id: Self {
+            self
+        }
+    }
+
     private let adapter: CarAdapting
     private let notificationsManager: NotificationsManager
 
@@ -25,8 +34,7 @@ final class CarInfoViewModel {
     }
     var showError = false
     var showDeletePrompt = false
-    var showEditCarView = false
-    var showAddGasLog = false
+    var presentedScreen: PresentedScreen?
 
     init(uiCar: UICar, adapter: any CarAdapting, notificationsManager: NotificationsManager) {
         self.uiCar = uiCar

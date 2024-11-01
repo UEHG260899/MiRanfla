@@ -35,7 +35,7 @@ final class CarInfoViewModelTests: XCTestCase {
     func testInitialValues() {
         XCTAssertFalse(sut.showError)
         XCTAssertFalse(sut.showDeletePrompt)
-        XCTAssertFalse(sut.showEditCarView)
+        XCTAssertNil(sut.presentedScreen)
     }
 
     func testShouldShowNotificationsRow() {

@@ -11,7 +11,7 @@ enum MiRanflaMigrationPlan: SchemaMigrationPlan {
     static var schemas: [any VersionedSchema.Type] {
         [MiRanflaSchemaV1.self, MiRanflaSchemaV2.self]
     }
-    
+
     static var stages: [MigrationStage] {
         [migrateV1toV2]
     }
