@@ -123,6 +123,16 @@ struct CarInfoView: View {
                             .background(.customPrimary, in: RoundedRectangle(cornerRadius: 8))
                             .padding(.trailing)
                             .foregroundStyle(Color.text)
+
+                            NavigationLink(value: "") {
+                                Text("Ver registros")
+                                    .font(.medium, size: .body)
+                                    .padding(.vertical, 8)
+                                    .frame(maxWidth: .infinity)
+                                    .background(.customPrimary, in: RoundedRectangle(cornerRadius: 8))
+                                    .padding(.trailing)
+                                    .foregroundStyle(Color.text)
+                            }
                         }
                     }
                     .groupBoxStyle(.materialized)
@@ -180,6 +190,9 @@ struct CarInfoView: View {
             case .addGasLog:
                 AddGasLogFactory.make(carId: viewModel.uiCar.id)
             }
+        }
+        .navigationDestination(for: String.self) { _ in
+            GasLogsListView()
         }
     }
 }
