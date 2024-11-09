@@ -47,6 +47,9 @@ struct PreviewCarAdapter: CarAdapting {
     func delete(carId: UUID) throws {
     }
 
+    func delete(logId: UUID) throws {
+    }
+
     func carCount() throws -> Int {
         cars.count
     }

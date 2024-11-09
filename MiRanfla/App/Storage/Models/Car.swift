@@ -22,7 +22,7 @@ final class Car {
     var verificationNotificationsEnabled: Bool
 
     @Relationship(deleteRule: .cascade, inverse: \GasLog.car)
-    var gasLogs: [GasLog]
+    var gasLogs: [GasLog]?
 
     init(make: String,
          model: String,

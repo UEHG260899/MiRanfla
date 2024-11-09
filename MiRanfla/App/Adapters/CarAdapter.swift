@@ -13,6 +13,7 @@ protocol CarAdapting {
     func add(log: GasLogFormData, carId: UUID) throws
     func fetch(with descriptor: FetchDescriptor<Car>) throws -> [UICar]
     func delete(carId: UUID) throws
+    func delete(logId: UUID) throws
     func carCount() throws -> Int
 }
 
@@ -21,7 +22,6 @@ struct CarAdapter: CarAdapting {
     private let gasLogTransformer: GasLogTransformer
     private let storageManager: SwiftDataManager
 
-    // TODO: Find a way to not send default parameters
     init(carTransformer: CarTransformer = .init(),
          gasLogTransformer: GasLogTransformer = .init(),
          // swiftlint:disable:next force_try
@@ -43,10 +43,9 @@ struct CarAdapter: CarAdapting {
         }
         let descriptor = FetchDescriptor<Car>(predicate: predicate)
 
-        // TODO: Throw error if no car was found
         if let car = try storageManager.fetch(descriptor: descriptor).first {
             let gasLog = gasLogTransformer.transformToStorageModel(from: log, associatedCar: car)
-            car.gasLogs.append(gasLog)
+            car.gasLogs?.append(gasLog)
             try storageManager.save(car)
         }
     }
@@ -54,9 +53,9 @@ struct CarAdapter: CarAdapting {
     func fetch(with descriptor: FetchDescriptor<Car>) throws -> [UICar] {
         let storageCars = try storageManager.fetch(descriptor: descriptor)
         return storageCars.map { storageCar in
-            let uiLogs = storageCar.gasLogs.map { gasLogTransformer.transformToUIModel(from: $0) }
+            let uiLogs = storageCar.gasLogs?.map { gasLogTransformer.transformToUIModel(from: $0) }
                 .sorted { $0.date < $1.date }
-            return carTransformer.transformToUIModel(from: storageCar, gasLogs: uiLogs)
+            return carTransformer.transformToUIModel(from: storageCar, gasLogs: uiLogs ?? [])
         }
     }
 
@@ -65,6 +64,13 @@ struct CarAdapter: CarAdapting {
             car.id == carId
         }
         try storageManager.delete(objectType: Car.self, where: predicate)
+    }
+
+    func delete(logId: UUID) throws {
+        let predicate = #Predicate<GasLog>{ log in
+            log.id == logId
+        }
+        try storageManager.delete(objectType: GasLog.self, where: predicate)
     }
 
     func carCount() throws -> Int {

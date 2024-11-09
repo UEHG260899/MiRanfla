@@ -16,5 +16,6 @@ enum MiRanflaMigrationPlan: SchemaMigrationPlan {
         [migrateV1toV2]
     }
 
-    static let migrateV1toV2 = MigrationStage.lightweight(fromVersion: MiRanflaSchemaV1.self, toVersion: MiRanflaSchemaV2.self)
+    static let migrateV1toV2 = MigrationStage.lightweight(fromVersion: MiRanflaSchemaV1.self,
+                                                          toVersion: MiRanflaSchemaV2.self)
 }

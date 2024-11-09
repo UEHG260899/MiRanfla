@@ -60,37 +60,28 @@ final class CarInfoViewModelTests: XCTestCase {
     }
 
     func testConfigureNotifications() async {
-        // Notifications are enabled AND permissions throw
-        sut.uiCar.verificationNotificationsEnabled = true
-        mockNotificationsCenter.authorizationReturn = .failure(NSError(domain: "com.miranfla.tests", code: 10))
-
-        try? await Task.sleep(for: .milliseconds(50))
-
-        XCTAssertTrue(sut.showError)
-
-        // Notifications are enabled AND permissions are denied
-        sut.uiCar.verificationNotificationsEnabled = true
-        mockNotificationsCenter.authorizationReturn = .success(false)
-
-        try? await Task.sleep(for: .milliseconds(50))
-
-        XCTAssertFalse(sut.uiCar.verificationNotificationsEnabled)
-
-        // Notifications are disabled AND permissions are granted
-        sut.uiCar.verificationNotificationsEnabled = false
-        mockNotificationsCenter.authorizationReturn = .success(true)
-
-        try? await Task.sleep(for: .milliseconds(50))
+        // Toggle is OFF
+        await sut.manageNotifications(toggleState: false)
 
         XCTAssertTrue(mockNotificationsCenter.calledMethods.contains(.removeDeliveredNotifications))
         XCTAssertTrue(mockNotificationsCenter.calledMethods.contains(.removePendingNotificationRequests))
-    }
 
-    func testConfigureNotificationsWithPermissionGranted() async {
+        // Toggle is ON AND permissions throw
+        mockNotificationsCenter.authorizationReturn = .failure(NSError(domain: "com.miranfla.tests", code: 10))
+        await sut.manageNotifications(toggleState: true)
+
+        XCTAssertTrue(sut.showError)
+
+        // Toggle is ON AND permissions are denied
+        mockNotificationsCenter.authorizationReturn = .success(false)
+        await sut.manageNotifications(toggleState: true)
+
+        XCTAssertFalse(sut.uiCar.verificationNotificationsEnabled)
+
+        // Toggle is ON AND permissions are granted
         sut.uiCar.verificationNotificationsEnabled = true
         mockNotificationsCenter.authorizationReturn = .success(true)
-
-        try? await Task.sleep(for: .milliseconds(50))
+        await sut.manageNotifications(toggleState: true)
 
         XCTAssertTrue(mockNotificationsCenter.calledMethods.contains(.add))
         XCTAssertEqual(mockNotificationsCenter.receivedNotificationRequest?.identifier, car.id.uuidString)

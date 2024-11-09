@@ -69,7 +69,7 @@ final class CarAdapterTests: XCTestCase {
     }
 
     func testFetch() throws {
-        
+
         let mockCar = Car(make: "",
                             model: "",
                             year: 0,

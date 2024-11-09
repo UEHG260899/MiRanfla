@@ -38,6 +38,8 @@ struct UIGasLog: Identifiable, Hashable {
 
 #if DEBUG
 extension UIGasLog {
+    static let empty = UIGasLog(date: .now, price: 10, liters: 10, milage: 10)
+
     static let mockLogs: [UIGasLog] = [
         UIGasLog(month: 1, price: 150, liters: 15, milage: 15),
         UIGasLog(month: 2, price: 200, liters: 20, milage: 100),

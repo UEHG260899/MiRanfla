@@ -39,7 +39,6 @@ final class RootViewModel {
 
     @objc
     func showHome() {
-        // TODO: Support case when user deletes all cars and redirect to no car view
         Task { @MainActor in
             screenToShow = .home
             notificationsObserver.removeObserver(self)
