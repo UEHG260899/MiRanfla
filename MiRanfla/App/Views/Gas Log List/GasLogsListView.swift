@@ -12,27 +12,21 @@ struct GasLogsListView: View {
     @Environment(\.dismiss)
     private var dismiss
 
-    let gasLogs: [UIGasLog] = [
-        .init(date: .distantPast,
-              price: 100,
-              liters: 10,
-              milage: 10),
-        .init(date: Calendar.current.date(byAdding: .init(month: -1), to: .now) ?? .now,
-              price: 10,
-              liters: 10,
-              milage: 200),
-        .init(date: Calendar.current.date(byAdding: .init(month: -2), to: .now) ?? .now,
-              price: 120,
-              liters: 10,
-              milage: 10)
-    ]
+    @State
+    private var viewModel: GasLogListViewModel
+
+    init(viewModel: GasLogListViewModel) {
+        self.viewModel = viewModel
+    }
 
     var body: some View {
         List {
-            ForEach(gasLogs) { gasLog in
-                GasLogCellView(gasLog: gasLog)
+            ForEach(viewModel.logs) { gasLog in
+                GasLogCellView(gasLog: gasLog,
+                               onDelete: viewModel.delete(_:))
             }
         }
+        .animation(.easeOut, value: viewModel.logs)
         .padding(.horizontal, 12)
         .listStyle(.plain)
         .navigationBarBackButtonHidden()
@@ -57,12 +51,14 @@ struct GasLogsListView: View {
 
 #if DEBUG
 #Preview {
-    GasLogsListView()
+    GasLogsListView(viewModel: .init(logs: UIGasLog.mockLogs,
+                                     adapter: PreviewCarAdapter()))
 }
 
 #Preview("Inside NavStack") {
     NavigationStack {
-        GasLogsListView()
+        GasLogsListView(viewModel: .init(logs: UIGasLog.mockLogs,
+                                         adapter: PreviewCarAdapter()))
     }
 }
 #endif

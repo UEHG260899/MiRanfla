@@ -25,13 +25,7 @@ final class CarInfoViewModel {
     private let notificationsManager: NotificationsManager
 
     let shouldShowNotificationsRow: Bool
-    var uiCar: UICar {
-        didSet {
-            Task {
-                await configureNotifications()
-            }
-        }
-    }
+    var uiCar: UICar
     var showError = false
     var showDeletePrompt = false
     var presentedScreen: PresentedScreen?
@@ -43,7 +37,12 @@ final class CarInfoViewModel {
         self.shouldShowNotificationsRow = Constants.requiredVerificationStates.contains(uiCar.plateState)
     }
 
-    func configureNotifications() async {
+    func manageNotifications(toggleState: Bool) async {
+        guard toggleState else {
+            notificationsManager.removeNotifications(for: uiCar.id.uuidString)
+            return
+        }
+
         do {
             let permissionsGranted = try await notificationsManager.requestPermissions()
 
@@ -67,7 +66,6 @@ final class CarInfoViewModel {
                 return
             }
 
-            notificationsManager.removeNotifications(for: uiCar.id.uuidString)
         } catch {
             showError = true
         }

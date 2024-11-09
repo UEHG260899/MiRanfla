@@ -19,6 +19,7 @@ struct GasLogCellView: View {
                                         trailing: 0)
 
     let gasLog: UIGasLog
+    let onDelete: (UIGasLog) -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -39,10 +40,12 @@ struct GasLogCellView: View {
         .padding()
         .background(gradient, in: RoundedRectangle(cornerRadius: 12))
         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-            Button(role: .destructive) {
+            Button {
+                onDelete(gasLog)
             } label: {
                 Image(systemName: "trash")
             }
+            .tint(.red)
 
             Button {
             } label: {
@@ -97,7 +100,7 @@ struct GasLogCellView: View {
     GasLogCellView(gasLog: .init(date: .distantPast,
                                  price: 100,
                                  liters: 10,
-                                 milage: 10))
+                                 milage: 10)) { _ in }
     .padding(.horizontal)
 }
 #endif

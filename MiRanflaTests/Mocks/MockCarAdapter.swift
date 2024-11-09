@@ -48,6 +48,13 @@ final class MockCarAdapter: CarAdapting {
         }
     }
 
+    func delete(logId: UUID) throws {
+        receivedUUID = logId
+        if case let .failure(error) = deleteResult {
+            throw error
+        }
+    }
+
     func carCount() throws -> Int {
         returningCarsCount
     }

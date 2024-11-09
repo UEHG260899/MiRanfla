@@ -10,11 +10,14 @@ import Charts
 
 struct CarInfoView: View {
 
-    @Environment(\.dismiss) private var dismiss
-    @State private var viewModel: CarInfoViewModel
+    @Environment(\.presentationMode)
+    private var dismiss
+
+    @State
+    private var viewModel: CarInfoViewModel
 
     init(viewModel: CarInfoViewModel) {
-        self._viewModel = State(wrappedValue: viewModel)
+        self.viewModel = viewModel
     }
 
     private var gradient: some View {
@@ -146,7 +149,9 @@ struct CarInfoView: View {
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button(action: dismiss.callAsFunction) {
+                Button {
+                    dismiss.wrappedValue.dismiss()
+                } label: {
                     Image(systemName: "arrow.left")
                         .tint(.accent)
                 }
@@ -176,7 +181,7 @@ struct CarInfoView: View {
                 viewModel.deleteCar()
 
                 if !viewModel.showError {
-                    dismiss()
+                    dismiss.wrappedValue.dismiss()
                 }
             }
             Button("No", role: .cancel, action: {})
@@ -192,7 +197,12 @@ struct CarInfoView: View {
             }
         }
         .navigationDestination(for: String.self) { _ in
-            GasLogsListView()
+            ViewFactory.make(.logList(viewModel.uiCar.gasLogs))
+        }
+        .onChange(of: viewModel.uiCar.verificationNotificationsEnabled) { _, newState in
+            Task {
+                await viewModel.manageNotifications(toggleState: newState)
+            }
         }
     }
 }
