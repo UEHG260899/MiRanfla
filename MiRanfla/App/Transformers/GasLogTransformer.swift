@@ -14,7 +14,8 @@ struct GasLogTransformer {
                price: Decimal(string: uiLog.price) ?? 0,
                liters: Double(uiLog.liters) ?? 0,
                milage: Int(uiLog.milage) ?? 0,
-               car: car)
+               car: car,
+               id: uiLog.id)
     }
 
     func transformToUIModel(from storageLog: GasLog) -> UIGasLog {

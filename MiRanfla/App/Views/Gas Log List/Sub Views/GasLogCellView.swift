@@ -18,6 +18,7 @@ struct GasLogCellView: View {
                                         bottom: 0,
                                         trailing: 0)
 
+    @Binding var presentedScreen: GasLogListViewModel.PresentedScreen?
     let gasLog: UIGasLog
     let onDelete: (UIGasLog) -> Void
 
@@ -48,6 +49,7 @@ struct GasLogCellView: View {
             .tint(.red)
 
             Button {
+                presentedScreen = .edit(gasLog)
             } label: {
                 Image(systemName: "pencil")
             }
@@ -97,7 +99,8 @@ struct GasLogCellView: View {
 
 #if DEBUG
 #Preview {
-    GasLogCellView(gasLog: .init(date: .distantPast,
+    GasLogCellView(presentedScreen: .constant(nil),
+                   gasLog: .init(date: .distantPast,
                                  price: 100,
                                  liters: 10,
                                  milage: 10)) { _ in }

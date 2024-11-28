@@ -10,9 +10,18 @@ import Foundation
 @Observable
 final class GasLogListViewModel {
 
+    enum PresentedScreen: Identifiable {
+        case edit(UIGasLog)
+
+        var id: UUID {
+            UUID()
+        }
+    }
+
     private let adapter: CarAdapting
 
     var logs: [UIGasLog]
+    var presentedScreen: PresentedScreen?
     var showError = false
 
     init(logs: [UIGasLog], adapter: any CarAdapting) {

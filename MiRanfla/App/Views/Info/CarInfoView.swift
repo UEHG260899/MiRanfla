@@ -198,6 +198,7 @@ struct CarInfoView: View {
         }
         .navigationDestination(for: String.self) { _ in
             ViewFactory.make(.logList(viewModel.uiCar.gasLogs))
+                .environment(\.carId, viewModel.uiCar.id)
         }
         .onChange(of: viewModel.uiCar.verificationNotificationsEnabled) { _, newState in
             Task {
