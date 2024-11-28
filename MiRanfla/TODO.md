@@ -17,3 +17,7 @@
 ### RootViewModel
 
 1. Support case when user deletes all cars and redirect to no car view on `showHome`
+
+### GasLogListView
+
+1. Refresh the logs when a user returns from the edit log view.

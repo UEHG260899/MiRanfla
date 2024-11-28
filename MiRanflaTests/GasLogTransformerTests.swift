@@ -30,6 +30,7 @@ final class GasLogTransformerTests: XCTestCase {
         var storageLog = sut.transformToStorageModel(from: formData, associatedCar: mockCar)
 
         XCTAssertTrue(storageLog.car === mockCar)
+        XCTAssertEqual(storageLog.id, formData.id)
         XCTAssertEqual(storageLog.date, formData.date)
         XCTAssertEqual(storageLog.price, Decimal(string: formData.price)!)
         XCTAssertEqual(storageLog.liters, Double(formData.liters)!)

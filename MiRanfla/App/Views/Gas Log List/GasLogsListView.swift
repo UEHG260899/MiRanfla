@@ -22,7 +22,8 @@ struct GasLogsListView: View {
     var body: some View {
         List {
             ForEach(viewModel.logs) { gasLog in
-                GasLogCellView(gasLog: gasLog,
+                GasLogCellView(presentedScreen: $viewModel.presentedScreen,
+                               gasLog: gasLog,
                                onDelete: viewModel.delete(_:))
             }
         }
@@ -44,6 +45,11 @@ struct GasLogsListView: View {
             ToolbarItem(placement: .principal) {
                 Text("Registros")
                     .font(.semibold, size: .body)
+            }
+        }
+        .sheet(item: $viewModel.presentedScreen) { screen in
+            if case let .edit(log) = screen {
+                ViewFactory.make(.editGasLog(log))
             }
         }
     }
