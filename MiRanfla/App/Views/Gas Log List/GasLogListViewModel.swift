@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 @Observable
 final class GasLogListViewModel {
@@ -33,6 +34,19 @@ final class GasLogListViewModel {
         do {
             try adapter.delete(logId: log.id)
             logs.removeAll(where: { $0.id == log.id })
+        } catch {
+            showError = true
+        }
+    }
+
+    func refreshData(for carId: UUID) {
+        do {
+            let predicate = #Predicate<Car> { car in
+                car.id == carId
+            }
+            let descriptor = FetchDescriptor(predicate: predicate)
+            let updatedCar = try adapter.fetch(with: descriptor).first ?? .empty
+            self.logs = updatedCar.gasLogs
         } catch {
             showError = true
         }
