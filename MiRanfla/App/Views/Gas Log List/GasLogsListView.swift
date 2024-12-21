@@ -11,6 +11,9 @@ struct GasLogsListView: View {
 
     @Environment(\.dismiss)
     private var dismiss
+    
+    @Environment(\.carId)
+    private var carId
 
     @State
     private var viewModel: GasLogListViewModel
@@ -47,11 +50,14 @@ struct GasLogsListView: View {
                     .font(.semibold, size: .body)
             }
         }
-        .sheet(item: $viewModel.presentedScreen) { screen in
+        .sheet(item: $viewModel.presentedScreen) {
+            viewModel.refreshData(for: carId)
+        } content: { screen in
             if case let .edit(log) = screen {
                 ViewFactory.make(.editGasLog(log))
             }
         }
+
     }
 }
 

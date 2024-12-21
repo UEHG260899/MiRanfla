@@ -10,10 +10,23 @@ import XCTest
 
 final class GasLogListViewModelTests: XCTestCase {
 
+    var sut: GasLogListViewModel!
+    var mockAdapter: MockCarAdapter!
+    
+    override func setUp() {
+        super.setUp()
+        mockAdapter = MockCarAdapter()
+        sut = GasLogListViewModel(logs: UIGasLog.mockLogs, adapter: mockAdapter)
+    }
+
+    override func tearDown() {
+        mockAdapter = nil
+        sut = nil
+        super.tearDown()
+    }
+    
     func testDelete() {
-        let mockAdapter = MockCarAdapter()
         let logToRemove = UIGasLog.mockLogs.first!
-        let sut = GasLogListViewModel(logs: UIGasLog.mockLogs, adapter: mockAdapter)
 
         // Adapter doesn´t throw
         sut.delete(logToRemove)
@@ -26,6 +39,23 @@ final class GasLogListViewModelTests: XCTestCase {
         mockAdapter.deleteResult = .failure(NSError(domain: "com.miranfla.tests", code: 10))
         sut.delete(.empty)
 
+        XCTAssertTrue(sut.showError)
+    }
+
+    func testRefreshData() {
+        // When doesn´t throw
+        mockAdapter.fetchResult = .success([.previewCar])
+
+        sut.refreshData(for: UUID())
+
+        XCTAssertNotNil(mockAdapter.receivedDescriptor?.predicate)
+        XCTAssertFalse(sut.showError)
+        XCTAssertEqual(sut.logs, UICar.previewCar.gasLogs)
+
+        // When it throws
+        mockAdapter.fetchResult = .failure(NSError(domain: "com.miranfla.tests", code: 10))
+
+        sut.refreshData(for: UUID())
         XCTAssertTrue(sut.showError)
     }
 }
