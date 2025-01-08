@@ -186,6 +186,9 @@ struct CarInfoView: View {
             }
             Button("No", role: .cancel, action: {})
         }
+        .onAppear {
+            viewModel.refreshData()
+        }
         .sheet(item: $viewModel.presentedScreen) {
             viewModel.refreshData()
         } content: { screen in

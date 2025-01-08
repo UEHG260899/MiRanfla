@@ -12,7 +12,7 @@
 
 ### CarInfoView
 
-1. Refresh the car when a user returns from the GasLogListView
+1. See if we can just refresh onAppear instead of passing the data from the init.
 
 ### RootViewModel
 
