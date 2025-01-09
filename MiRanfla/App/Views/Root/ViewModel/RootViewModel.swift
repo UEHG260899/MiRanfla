@@ -34,6 +34,11 @@ final class RootViewModel {
             notificationsObserver.addObserver(self,
                                               selector: #selector(showHome),
                                               name: .NSPersistentStoreRemoteChange, object: nil)
+
+            notificationsObserver.addObserver(self,
+                                              selector: #selector(showNoCarView),
+                                              name: .allCarsDeletedNotification,
+                                              object: nil)
         } catch {}
     }
 
@@ -41,7 +46,14 @@ final class RootViewModel {
     func showHome() {
         Task { @MainActor in
             screenToShow = .home
-            notificationsObserver.removeObserver(self)
+            notificationsObserver.removeObserver(self, name: .NSPersistentStoreRemoteChange, object: nil)
+        }
+    }
+
+    @objc
+    func showNoCarView() {
+        Task { @MainActor in
+            screenToShow = .noCar
         }
     }
 }

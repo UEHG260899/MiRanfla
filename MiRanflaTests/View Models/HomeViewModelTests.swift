@@ -11,15 +11,18 @@ final class HomeViewModelTests: XCTestCase {
 
     var sut: HomeViewModel!
     var mockAdapter: MockCarAdapter!
+    var mockNotificationPoster: MockNotificationPoster!
 
     override func setUp() {
         super.setUp()
         mockAdapter = MockCarAdapter()
-        sut = HomeViewModel(adapter: mockAdapter)
+        mockNotificationPoster = MockNotificationPoster()
+        sut = HomeViewModel(adapter: mockAdapter, notificationsPoster: mockNotificationPoster)
     }
 
     override func tearDown() {
         mockAdapter = nil
+        mockNotificationPoster = nil
         sut = nil
         super.tearDown()
     }
@@ -53,6 +56,16 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(sut.cars.count, sut.filteredCars.count)
         XCTAssertEqual(mockAdapter.receivedDescriptor?.sortBy, [SortDescriptor(\Car.make)])
 
+        // When no cars are fetched
+        mockAdapter.fetchResult = .success([])
+
+        sut.fetchCars()
+
+        XCTAssertTrue(mockNotificationPoster.calledMethods.contains(.post))
+        XCTAssertEqual(mockNotificationPoster.postedNotificationName, .allCarsDeletedNotification)
+        XCTAssertEqual(sut.cars.count, 0)
+
+        // When it throws
         mockAdapter.fetchResult = .failure(NSError(domain: "com.miranfla.tests", code: 10))
 
         sut.fetchCars()

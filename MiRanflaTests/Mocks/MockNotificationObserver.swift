@@ -22,7 +22,23 @@ final class MockNotificationObserver: NotificationsObserving {
         calledMethods.insert(.addObserver)
     }
 
-    func removeObserver(_ observer: Any) {
+    func removeObserver(_ observer: Any, name: NSNotification.Name?, object: Any?) {
         calledMethods.insert(.removeObserver)
+    }
+}
+
+final class MockNotificationPoster: NotificationsPosting {
+    struct CalledMethods: OptionSet {
+        let rawValue: Int
+
+        static let post = CalledMethods(rawValue: 1 << 0)
+    }
+
+    var calledMethods: CalledMethods = []
+    var postedNotificationName: NSNotification.Name?
+
+    func post(name: NSNotification.Name, object: Any?) {
+        calledMethods.insert(.post)
+        self.postedNotificationName = name
     }
 }
