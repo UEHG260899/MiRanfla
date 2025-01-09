@@ -13,6 +13,7 @@ import Observation
 final class HomeViewModel {
 
     private let adapter: CarAdapting
+    private let notificationPoster: NotificationsPosting
 
     var cars = [UICar]()
     var filteredCars = [UICar]()
@@ -24,14 +25,21 @@ final class HomeViewModel {
     var showError = false
     var showAddCarView = false
 
-    init(adapter: any CarAdapting) {
+    init(adapter: any CarAdapting, notificationsPoster: any NotificationsPosting = NotificationCenter.default) {
         self.adapter = adapter
+        self.notificationPoster = notificationsPoster
     }
 
     func fetchCars() {
         do {
             let descriptor = FetchDescriptor<Car>(sortBy: [SortDescriptor(\.make)])
             self.cars = try adapter.fetch(with: descriptor)
+
+            if cars.count == 0 {
+                notificationPoster.post(name: .allCarsDeletedNotification, object: nil)
+                return
+            }
+
             self.filteredCars = cars
         } catch {
             showError = true

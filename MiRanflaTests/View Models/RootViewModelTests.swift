@@ -57,4 +57,19 @@ final class RootViewModelTests: XCTestCase {
         XCTAssertEqual(sut.screenToShow, .home)
         XCTAssertTrue(notificationObserver.calledMethods.contains(.removeObserver))
     }
+
+    func testShowNoCarView() async {
+        // Given
+        let adapter = MockCarAdapter()
+        let notificationObserver = MockNotificationObserver()
+
+        let sut = RootViewModel(adapter: adapter, notificationsObserver: notificationObserver)
+
+        // When
+        sut.showNoCarView()
+        try? await Task.sleep(for: .microseconds(50))
+
+        // Then
+        XCTAssertEqual(sut.screenToShow, .noCar)
+    }
 }

@@ -11,7 +11,7 @@ struct EditGasLogView: View {
 
     @Environment(\.dismiss)
     private var dismiss
-    
+
     @Environment(\.carId)
     private var carId
 
