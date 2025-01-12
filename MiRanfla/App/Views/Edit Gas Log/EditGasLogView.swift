@@ -34,6 +34,7 @@ struct EditGasLogView: View {
                             Text("Fecha")
                                 .font(.regular, size: .body)
                         }
+                        .environment(\.locale, Locale(identifier: "es-MX"))
 
                         TextField(text: $viewModel.formData.price) {
                             Text("Costo Total")

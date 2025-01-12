@@ -24,10 +24,13 @@ struct AddGasLogView: View {
 
                 Form {
                     Section {
-                        DatePicker(selection: $viewModel.gasLogFormData.date, displayedComponents: .date) {
+                        DatePicker(selection: $viewModel.gasLogFormData.date,
+                                   in: ...Date(),
+                                   displayedComponents: .date) {
                             Text("Fecha")
                                 .font(.regular, size: .body)
                         }
+                        .environment(\.locale, Locale(identifier: "es-MX"))
 
                         TextField(text: $viewModel.gasLogFormData.price) {
                             Text("Costo Total")
