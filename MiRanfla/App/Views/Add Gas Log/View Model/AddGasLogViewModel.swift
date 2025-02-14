@@ -13,12 +13,14 @@ final class AddGasLogViewModel {
 
     private let carId: UUID
     private let adapter: any CarAdapting
-    var gasLogFormData: GasLogFormData = .empty
+
     var showError = false
+    var gasLogFormData: GasLogFormData
 
     init(carId: UUID, carAdapter: any CarAdapting) {
         self.carId = carId
         self.adapter = carAdapter
+        self.gasLogFormData = GasLogFormData(date: .now, price: "", liters: "", milage: "", id: .init())
     }
 
     func save() {

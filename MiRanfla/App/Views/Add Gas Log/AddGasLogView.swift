@@ -76,7 +76,6 @@ struct AddGasLogView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-
         }
 
     }

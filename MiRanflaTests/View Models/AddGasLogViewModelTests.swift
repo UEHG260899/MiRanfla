@@ -26,7 +26,10 @@ final class AddGasLogViewModelTests: XCTestCase {
     }
 
     func testInit() {
-        XCTAssertEqual(sut.gasLogFormData, .empty)
+        XCTAssertTrue(sut.gasLogFormData.liters.isEmpty)
+        XCTAssertTrue(sut.gasLogFormData.milage.isEmpty)
+        XCTAssertTrue(sut.gasLogFormData.price.isEmpty)
+        XCTAssertNotEqual(sut.gasLogFormData.id, GasLogFormData.empty.id)
         XCTAssertFalse(sut.showError)
     }
 
