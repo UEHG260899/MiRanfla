@@ -13,7 +13,3 @@
 ### CarInfoView
 
 1. See if we can just refresh onAppear instead of passing the data from the init.
-
-### GasLogCellView
-
-1. Fix date localization.

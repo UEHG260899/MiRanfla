@@ -24,7 +24,7 @@ struct GasLogCellView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(gasLog.date, format: .dateTime)
+            Text(gasLog.formatedDate)
                 .font(.regular, size: .body)
                 .frame(maxWidth: .infinity, alignment: .trailing)
 

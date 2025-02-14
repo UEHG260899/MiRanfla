@@ -13,9 +13,21 @@ struct UIGasLog: Identifiable, Hashable {
     let price: Decimal
     let liters: Double
     let milage: Int
+
     var consumption: Double {
         Double(milage) / liters
     }
+
+    var formatedDate: String {
+        formatter.string(from: date)
+    }
+
+    private let formatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy, HH:mm"
+        dateFormatter.locale = Locale(identifier: "es_MX")
+        return dateFormatter
+    }()
 
     // Graph init
     init(month: Int, price: Decimal, liters: Double, milage: Int, id: UUID = UUID()) {
